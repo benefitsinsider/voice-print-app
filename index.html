@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Voice Print™ — sound like you, everywhere</title>
+<meta name="description" content="Answer a short set of questions and get your Voice Print™ — the file that teaches The One-for-Ten System™ to write in your voice, not a robot's.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FAF8F3; --soft:#F1ECE1; --ink:#0F1117; --mut:#6b6e76;
+    --gold:#B8841A; --gold-deep:#8f6512; --line:#e5ddcc;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  header{text-align:center;padding:28px 0 8px}
+  .brandline{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,44px);font-weight:700;margin:10px 0 6px}
+  .sub{color:var(--mut);max-width:520px;margin:0 auto}
+  .privacy{display:inline-block;margin-top:14px;font-size:13px;color:var(--gold-deep);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:5px 14px}
+  .progress{display:flex;gap:6px;margin:30px 0 22px}
+  .progress span{flex:1;height:4px;border-radius:2px;background:var(--line);transition:background .3s}
+  .progress span.done{background:var(--gold)}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:32px 30px;box-shadow:0 2px 14px rgba(15,17,23,.05)}
+  .step-kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:6px}
+  h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:4px}
+  .why{color:var(--mut);font-size:14.5px;margin-bottom:22px}
+  .field{margin-bottom:20px}
+  label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
+  label .req{color:var(--gold-deep)}
+  .hint{font-size:13px;color:var(--mut);margin-bottom:7px}
+  input[type=text],textarea,select{
+    width:100%;border:1px solid var(--line);border-radius:9px;background:var(--cream);
+    padding:11px 13px;font:inherit;font-size:15px;color:var(--ink)
+  }
+  textarea{min-height:88px;resize:vertical}
+  textarea.tall{min-height:130px}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+  .checks{display:flex;flex-wrap:wrap;gap:9px}
+  .checks label{display:inline-flex;align-items:center;gap:7px;font-weight:500;font-size:14.5px;
+    border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;background:var(--cream)}
+  .checks input{accent-color:var(--gold-deep)}
+  .checks label:has(input:checked){border-color:var(--gold);background:var(--soft);font-weight:700}
+  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
+  button{font:inherit;font-weight:700;border-radius:10px;padding:12px 26px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  button.primary{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+  button.primary:hover{background:#000}
+  button.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
+  button.gold:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:var(--cream)}
+  button.ghost:hover{border-color:var(--gold)}
+  .err{color:#a33;font-size:13.5px;margin-top:10px;display:none}
+  pre{background:var(--ink);color:var(--cream);border-radius:12px;padding:22px;font-size:12.5px;line-height:1.55;
+    overflow:auto;max-height:420px;white-space:pre-wrap;word-break:break-word}
+  .finish-actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+  .nextsteps{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px 22px;font-size:15px}
+  .nextsteps ol{margin-left:20px}
+  .nextsteps li{margin:6px 0}
+  footer{text-align:center;margin-top:46px;color:var(--mut);font-size:13.5px}
+  footer a{color:var(--gold-deep);font-weight:700;text-decoration:none}
+  .sig{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--ink);margin-bottom:6px}
+  @media (max-width:520px){.card{padding:24px 18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brandline">Exit-Proof™ · The One-for-Ten System™</div>
+    <h1>The Voice Print™</h1>
+    <p class="sub">Fifteen minutes of honest answers. In return, every piece of content the system ever writes sounds like you — not a robot, not a marketer. You.</p>
+    <span class="privacy">Your answers never leave this browser. Nothing is uploaded, tracked, or stored anywhere but your own computer.</span>
+  </header>
+
+  <div class="progress" id="progress"></div>
+  <div class="card" id="card"></div>
+
+  <footer>
+    <div class="sig">We should all be known.</div>
+    Part of <a href="https://exit-proof.com">The One-for-Ten System™</a> by Kwame Kuadey ·
+    <a href="https://exitproofscore.com">Take the free Exit-Proof™ Assessment</a>
+  </footer>
+</div>
+
+<script>
+const STORE_KEY = 'voiceprint-v1';
+
+// type: text | textarea | lines (one-per-line textarea) | checks | select
+const STEPS = [
+  {
+    kicker:'Step 1 of 10', title:'You', why:'The basics that sign every piece.',
+    fields:[
+      {id:'name', label:'Your name', req:true, type:'text', ph:'e.g., Kwame Kuadey'},
+      {id:'brand', label:'Your business or brand', req:true, type:'text', ph:'e.g., Exit-Proof™'},
+      {id:'website', label:'Your website(s)', type:'text', ph:'e.g., exit-proof.com (personal site: kwamekuadey.com)'},
+    ]
+  },
+  {
+    kicker:'Step 2 of 10', title:'Who you help', why:'The system points every piece at these people. Be specific — "everyone" produces content for no one.',
+    fields:[
+      {id:'who', label:'Who do you help?', req:true, type:'textarea', ph:'The specific person, at the specific moment they need you.'},
+      {id:'comeleave', label:'Why do people come to you — and what do they leave with?', type:'textarea', hint:'The problem that brings them in the door, and the change they walk out with.'},
+      {id:'story', label:'Your story — the part only you can tell', req:true, type:'textarea', cls:'tall', hint:'The honest version. The struggle before the win carries more weight than the win.'},
+      {id:'oneline', label:'How do you describe yourself in one line?', req:true, type:'text', ph:'"I help ___ become ___ — so that ___."'},
+      {id:'notfor', label:'Who are you NOT for?', type:'textarea', hint:'Naming who you don\'t serve keeps your voice from drifting toward hype.'},
+    ]
+  },
+  {
+    kicker:'Step 3 of 10', title:'How you sound', why:'This is the heart of the Voice Print. The system treats these as law.',
+    fields:[
+      {id:'tone', label:'Your tone in three words', req:true, type:'text', ph:'e.g., Honest, direct, generous'},
+      {id:'phrases', label:'Signature phrases — things you actually say', type:'lines', hint:'One per line. The system will use these word-for-word or not at all — never reworded.'},
+      {id:'banned', label:'Banned words and phrases', type:'lines', hint:'One per line. Words that make you cringe when marketers use them. The system will never use these.'},
+      {id:'sample', label:'A short sample that sounds MOST like you', req:true, type:'textarea', cls:'tall', hint:'A paragraph you wrote (or said) that you\'d be proud to have quoted back. This calibrates everything.'},
+      {id:'humor', label:'Humor, stories, and off-limits topics', type:'textarea', hint:'How you use stories and humor — and anything the system must never bring up.'},
+    ]
+  },
+  {
+    kicker:'Step 4 of 10', title:'Where you show up', why:'So hooks are written for the platform your people actually see.',
+    fields:[
+      {id:'platforms', label:'Platforms you publish on', type:'checks',
+        options:['LinkedIn','YouTube','Instagram','TikTok','X / Threads','Facebook','Substack','Email newsletter','Podcast']},
+      {id:'primary', label:'Your PRIMARY platform', req:true, type:'text', hint:'Hooks get optimized for this one first.', ph:'e.g., LinkedIn'},
+      {id:'hashrule', label:'Your hashtag rule', type:'select', options:['None — I don\'t use hashtags','A few (0–3) where they help','Platform-specific sets (list below)']},
+      {id:'hashsets', label:'Your hashtag sets (if any)', type:'textarea', hint:'Leave blank if you don\'t use them.'},
+    ]
+  },
+  {
+    kicker:'Step 5 of 10', title:'What you sell', why:'Hard rule of the system: every piece ends at a destination you own. These are the destinations.',
+    fields:[
+      {id:'products', label:'Your products or offers (up to three)', type:'lines', hint:'One per line, with price if you name it publicly. e.g., "The One-for-Ten System™ — turn one video into ten pieces. $297."'},
+      {id:'flagship', label:'Anything beyond the flagship?', type:'text', hint:'A premium program, retainer, or 1:1 offer.'},
+      {id:'cta', label:'PRIMARY call-to-action — the exact invitation + link', req:true, type:'text', ph:'e.g., "Take the free Exit-Proof™ Assessment at exitproofscore.com"', hint:'Written exactly as it should appear. This closes every piece.'},
+      {id:'cta2', label:'Secondary CTA + link', type:'text', ph:'e.g., Subscribe to my newsletter at kwame.blog'},
+    ]
+  },
+  {
+    kicker:'Step 6 of 10', title:'Why you\'re qualified', why:'Proof beats promises. The system weaves this in so you never have to brag mid-post.',
+    fields:[
+      {id:'proof', label:'Your proof', req:true, type:'textarea', cls:'tall', hint:'Numbers, names, credentials, outcomes. Only what\'s true and verifiable — accuracy is the brand.'},
+      {id:'proofpoint', label:'The ONE proof point that must never get buried', req:true, type:'textarea', hint:'The single line that makes a stranger take you seriously. It appears in the LinkedIn post and newsletter of every run.'},
+      {id:'testimonials', label:'Testimonials you can quote', type:'textarea', hint:'With permission, word-for-word. Leave blank if you\'re still collecting.'},
+    ]
+  },
+  {
+    kicker:'Step 7 of 10', title:'Your archive', why:'Your best existing content can be your first runs — no new recording needed.',
+    fields:[
+      {id:'archive', label:'Up to five existing pieces worth repurposing', type:'lines', hint:'One per line: a YouTube link, a workshop recording, your best blog post, a podcast episode.'},
+    ]
+  },
+  {
+    kicker:'Step 8 of 10', title:'Your first five videos', why:'The questions prospects always ask you ARE your content calendar.',
+    fields:[
+      {id:'firstfive', label:'Five questions people always ask you', type:'lines', hint:'One per line, in their words. Each becomes a 10–25 minute video, which becomes ten pieces.'},
+    ]
+  },
+  {
+    kicker:'Step 9 of 10', title:'Production preferences', why:'How your clips and quote graphics should come out.',
+    fields:[
+      {id:'captions', label:'Captions burned into your clips?', type:'select', options:['Yes','No','I add my own in my editor']},
+      {id:'brandkit', label:'Brand colors + fonts for quote graphics', type:'textarea', hint:'Hex codes and font names if you have them. e.g., "Gold #B8841A, ink #0F1117, cream #FAF8F3. Playfair Display (headlines), DM Sans (body)." Leave blank and the system will ask.'},
+      {id:'anything', label:'Anything else the system should know', type:'textarea', hint:'Rules of thumb, pet peeves, the deeper idea behind your work.'},
+    ]
+  },
+  {
+    kicker:'Step 10 of 10', title:'Words you use', why:'Auto-transcription mangles names and brand terms. Words on this list come back spelled right. Your name, brand, products, and links are added automatically from your earlier answers.',
+    fields:[
+      {id:'keyterms', label:'Extra brand vocabulary', type:'lines', hint:'One per line: people\'s names, company names, acronyms, product names, anything transcription keeps getting wrong.'},
+    ]
+  },
+];
+
+let state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
+let step = state.__step || 0; // 0..STEPS.length (last = finish screen)
+
+function save(){ state.__step = step; localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+function renderProgress(){
+  const p = document.getElementById('progress');
+  p.innerHTML = STEPS.map((_,i)=>`<span class="${i<step?'done':''}"></span>`).join('') +
+    `<span class="${step>=STEPS.length?'done':''}"></span>`;
+}
+
+function fieldHtml(f){
+  const v = state[f.id];
+  const req = f.req ? ' <span class="req">*</span>' : '';
+  let control = '';
+  if (f.type==='text')
+    control = `<input type="text" id="${f.id}" value="${esc(v||'').replace(/"/g,'&quot;')}" placeholder="${f.ph||''}">`;
+  else if (f.type==='textarea' || f.type==='lines')
+    control = `<textarea id="${f.id}" class="${f.cls||''}" placeholder="${f.ph||''}">${esc(v||'')}</textarea>`;
+  else if (f.type==='select')
+    control = `<select id="${f.id}">${f.options.map(o=>`<option ${v===o?'selected':''}>${o}</option>`).join('')}</select>`;
+  else if (f.type==='checks')
+    control = `<div class="checks">${f.options.map(o=>
+      `<label><input type="checkbox" data-group="${f.id}" value="${o}" ${(v||[]).includes(o)?'checked':''}>${o}</label>`).join('')}</div>`;
+  return `<div class="field"><label for="${f.id}">${f.label}${req}</label>${f.hint?`<div class="hint">${f.hint}</div>`:''}${control}</div>`;
+}
+
+function collect(fields){
+  fields.forEach(f=>{
+    if (f.type==='checks')
+      state[f.id] = [...document.querySelectorAll(`[data-group="${f.id}"]:checked`)].map(x=>x.value);
+    else
+      state[f.id] = document.getElementById(f.id).value;
+  });
+  save();
+}
+
+function missingRequired(fields){
+  return fields.filter(f=>f.req && !(state[f.id]||'').trim()).map(f=>f.label);
+}
+
+function render(){
+  renderProgress();
+  const card = document.getElementById('card');
+  if (step >= STEPS.length) return renderFinish();
+  const s = STEPS[step];
+  card.innerHTML = `
+    <div class="step-kicker">${s.kicker}</div>
+    <h2>${s.title}</h2>
+    <p class="why">${s.why}</p>
+    ${s.fields.map(fieldHtml).join('')}
+    <p class="err" id="err"></p>
+    <div class="nav">
+      <button class="ghost" id="back" ${step===0?'style="visibility:hidden"':''}>&larr; Back</button>
+      <button class="primary" id="next">${step===STEPS.length-1?'Finish — build my Voice Print':'Next &rarr;'}</button>
+    </div>`;
+  card.querySelectorAll('input,textarea,select').forEach(el=>
+    el.addEventListener('change',()=>collect(s.fields)));
+  document.getElementById('back').onclick = ()=>{ collect(s.fields); step--; save(); render(); window.scrollTo(0,0); };
+  document.getElementById('next').onclick = ()=>{
+    collect(s.fields);
+    const miss = missingRequired(s.fields);
+    if (miss.length){
+      const e = document.getElementById('err');
+      e.style.display='block';
+      e.textContent = 'Still needed: ' + miss.join(' · ');
+      return;
+    }
+    step++; save(); render(); window.scrollTo(0,0);
+  };
+}
+
+function lines(v){ return (v||'').split('\n').map(x=>x.trim()).filter(Boolean); }
+
+function buildKeyterms(){
+  const terms = [];
+  const add = t => { t=t.trim(); if (t && !terms.some(x=>x.toLowerCase()===t.toLowerCase())) terms.push(t); };
+  add(state.name); add(state.brand);
+  (state.website||'').split(/[,;()]| /).forEach(w=>{ if (w.includes('.')) add(w.replace(/[:\/]+$/,'')); });
+  lines(state.products).forEach(p=>add(p.split(/—|--|:|\$/)[0]));
+  [state.cta, state.cta2].forEach(c=>(c||'').split(' ').forEach(w=>{ if (w.includes('.') && !w.includes('..')) add(w.replace(/["'.,]+$/,'')); }));
+  lines(state.keyterms).forEach(add);
+  return terms;
+}
+
+function listBlock(v, indent){
+  const ls = lines(v);
+  if (!ls.length) return indent + '- (none yet)';
+  return ls.map(x=>indent + '- ' + x).join('\n');
+}
+function numBlock(v){
+  const ls = lines(v);
+  if (!ls.length) return '  (none yet)';
+  return ls.map((x,i)=>`  ${i+1}. ${x}`).join('\n');
+}
+
+function generate(){
+  const d = new Date();
+  const date = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const g = id => (state[id]||'').trim().replace(/\s*\n+\s*/g,' ');
+  const gml = id => (state[id]||'').trim();
+  return `# My Voice Print™
+<!-- Generated by the Voice Print™ app on ${date}.
+Drop this file into your one-for-ten-system folder, replacing the template.
+Update it whenever your offer, links, or positioning change. -->
+
+## Me
+- Name: ${g('name')}
+- Business/brand: ${g('brand')}
+- Website: ${g('website') || '(none yet)'}
+
+## Who I help
+- Who I help: ${g('who')}
+- Why people come to me — and what they leave with: ${g('comeleave') || '(still articulating this)'}
+- My story — the part only I can tell: ${g('story')}
+- How I describe myself in one line: ${g('oneline')}
+- Who I'm not for: ${g('notfor') || '(none named yet)'}
+
+## How I sound
+- My tone in three words: ${g('tone')}
+- Signature phrases — USE WORD-FOR-WORD, NEVER REWORD:
+${lines(state.phrases).length ? lines(state.phrases).map(p=>'  - "'+p.replace(/^"|"$/g,'')+'"').join('\n') : '  - (none yet)'}
+- Banned words and phrases — never use:
+${listBlock(state.banned,'  ')}
+- A sample that sounds MOST like me:
+  ${gml('sample').replace(/\n/g,'\n  ')}
+- Humor / stories / off-limits: ${g('humor') || '(no special rules yet)'}
+
+## Where I show up
+- Platforms I'm on: ${(state.platforms||[]).join(', ') || '(none selected)'}
+- My PRIMARY platform (optimize hooks for this one): ${g('primary')}
+- Hashtag rule: ${g('hashrule') || 'None — I don\'t use hashtags'}
+- My hashtag sets: ${g('hashsets') || '(none)'}
+
+## What I sell
+- My three products:
+${numBlock(state.products)}
+- In addition to my flagship: ${g('flagship') || '(nothing else yet)'}
+- PRIMARY call-to-action — exact invitation + link (default close on every piece): "${g('cta').replace(/^"|"$/g,'')}"
+- Secondary CTA + link: ${g('cta2') || '(none yet)'}
+
+## Why I am qualified
+- My proof: ${g('proof')}
+- The ONE proof point that must never get buried (include in the LinkedIn post and newsletter of every run): ${g('proofpoint')}
+- Testimonials I can quote: ${g('testimonials') || '(collecting — none loaded yet)'}
+
+## My archive shortlist (best existing pieces — first runs, no recording needed)
+${numBlock(state.archive)}
+
+## My first five videos (from the questions prospects always ask)
+${numBlock(state.firstfive)}
+
+## Production preferences
+- Captions on clips: ${g('captions') || 'Yes'}
+- Brand colors + fonts for quote graphics: ${g('brandkit') || '(none yet — ask me before making quote graphics)'}
+- Anything else the system should know: ${g('anything') || '(nothing extra)'}
+
+## Words I Use (brand vocabulary — feeds the transcription keyterms)
+These are passed to the transcription engine so they come back spelled right
+instead of mangled by auto-captions. Add any term the system keeps getting wrong.
+${buildKeyterms().map(t=>'- '+t).join('\n')}
+`;
+}
+
+function renderFinish(){
+  const card = document.getElementById('card');
+  const md = generate();
+  card.innerHTML = `
+    <div class="step-kicker">Done</div>
+    <h2>Your Voice Print™ is ready</h2>
+    <p class="why">Read it once. If a line doesn't sound like you, go back and say it the way you'd actually say it.</p>
+    <pre id="preview">${esc(md)}</pre>
+    <div class="finish-actions">
+      <button class="gold" id="download">Download voice-print.md</button>
+      <button class="primary" id="copy">Copy to clipboard</button>
+      <button class="ghost" id="edit">&larr; Go back and edit</button>
+    </div>
+    <div class="nextsteps">
+      <strong>What to do with it:</strong>
+      <ol>
+        <li>Move the downloaded <b>voice-print.md</b> into your <b>one-for-ten-system</b> folder, replacing the one that's there.</li>
+        <li>Drop a video into <b>drop-your-video-here</b>.</li>
+        <li>Open the folder in Claude and type: <b>run my one-for-ten</b>.</li>
+      </ol>
+      Don't have the system yet? It's at <a href="https://exit-proof.com"><b>exit-proof.com</b></a>.
+    </div>`;
+  document.getElementById('download').onclick = ()=>{
+    const blob = new Blob([generate()], {type:'text/markdown'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'voice-print.md';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+  document.getElementById('copy').onclick = async (e)=>{
+    await navigator.clipboard.writeText(generate());
+    e.target.textContent = 'Copied ✓';
+    setTimeout(()=>e.target.textContent='Copy to clipboard', 1800);
+  };
+  document.getElementById('edit').onclick = ()=>{ step = 0; save(); render(); window.scrollTo(0,0); };
+}
+
+render();
+</script>
+</body>
+</html>
