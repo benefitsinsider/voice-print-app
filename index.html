@@ -58,6 +58,13 @@
   .nextsteps{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px 22px;font-size:15px}
   .nextsteps ol{margin-left:20px}
   .nextsteps li{margin:6px 0}
+  .bonus{border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:16px;background:var(--cream)}
+  .bonus h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:4px}
+  .bonus p{font-size:14.5px;color:var(--mut)}
+  .gate{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .gate input{flex:1;min-width:220px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:11px 13px;font:inherit;font-size:15px}
+  .gate-note{font-size:12.5px;color:var(--mut);margin-top:8px}
+  .unlocked-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
   footer{text-align:center;margin-top:46px;color:var(--mut);font-size:13.5px}
   footer a{color:var(--gold-deep);font-weight:700;text-decoration:none}
   .sig{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--ink);margin-bottom:6px}
@@ -65,12 +72,15 @@
 </style>
 </head>
 <body>
+<form name="voiceprint-leads" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name"><input type="email" name="email"><input type="text" name="brand"><input type="text" name="bot-field">
+</form>
 <div class="wrap">
   <header>
     <div class="brandline">Exit-Proof™ · The One-for-Ten System™</div>
     <h1>The Voice Print™</h1>
     <p class="sub">Fifteen minutes of honest answers. In return, every piece of content the system ever writes sounds like you — not a robot, not a marketer. You.</p>
-    <span class="privacy">Your answers never leave this browser. Nothing is uploaded, tracked, or stored anywhere but your own computer.</span>
+    <span class="privacy">Your answers never leave this browser — they're stored only on your own computer. The one exception: your name and email, and only if you choose to leave them at the end.</span>
   </header>
 
   <div class="progress" id="progress"></div>
@@ -337,6 +347,152 @@ ${buildKeyterms().map(t=>'- '+t).join('\n')}
 `;
 }
 
+function buildPrompt(){
+  const g = id => (state[id]||'').trim().replace(/\s*\n+\s*/g,' ');
+  const phr = lines(state.phrases).map(p=>'- "'+p.replace(/^"|"$/g,'')+'"').join('\n') || '- (none)';
+  const ban = lines(state.banned).map(b=>'- '+b).join('\n') || '- (none)';
+  return `WRITE IN MY VOICE — SYSTEM PROMPT
+(Paste this whole thing into a new chat with any AI — ChatGPT, Claude, Gemini —
+then ask for your LinkedIn post, email, or script. It will sound like you.)
+
+You are my writing partner. Every word you write must sound like me — not like
+an AI, not like a marketer. Here is who I am and how I sound. Treat these as
+hard rules.
+
+WHO I AM: ${g('name')}, ${g('brand')}. ${g('oneline')}
+
+MY STORY: ${g('story')}
+
+WHO I WRITE FOR: ${g('who')}
+
+MY TONE, IN THREE WORDS: ${g('tone')}
+
+SIGNATURE PHRASES — use word-for-word or not at all, never reworded:
+${phr}
+
+BANNED — never use these words or phrases, or anything that sounds like hype:
+${ban}
+
+A SAMPLE THAT SOUNDS MOST LIKE ME — match this rhythm and register:
+${(state.sample||'').trim()}
+
+MY PROOF — weave in naturally, never let me sound like I'm bragging:
+${g('proof')}
+
+EVERY PIECE ENDS at a destination I own. Default close: ${g('cta')}
+
+RULES:
+1. Never invent facts, numbers, or quotes. If something is missing, ask me.
+2. Short sentences carry emotional weight. Vary the rhythm.
+3. No emoji-heavy copy. No manufactured urgency.
+4. Humor and stories: ${g('humor') || 'use sparingly, never at anyone\'s expense.'}
+5. When in doubt, sound more like my sample and less like a marketer.
+
+— Built with The Voice Print™ (voiceprint-exitproof.netlify.app), part of the
+Exit-Proof™ framework by Kwame Kuadey.`;
+}
+
+function buildReport(){
+  const g = id => esc((state[id]||'').trim());
+  const phr = lines(state.phrases).map(p=>'<li>"'+esc(p.replace(/^"|"$/g,''))+'"</li>').join('') || '<li>(none yet)</li>';
+  const ban = lines(state.banned).map(b=>'<li>'+esc(b)+'</li>').join('') || '<li>(none yet)</li>';
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Voice Print™ Report — ${g('name')}</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body{font-family:'DM Sans',sans-serif;background:#FAF8F3;color:#0F1117;line-height:1.6;margin:0;padding:40px 20px}
+.page{max-width:680px;margin:0 auto}h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,42px);margin:6px 0}
+.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8f6512;font-weight:700}
+.one{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;margin:10px 0 26px}
+h2{font-family:'Playfair Display',serif;font-size:20px;border-bottom:2px solid #B8841A;padding-bottom:6px;margin:30px 0 10px}
+ul{margin:8px 0;padding-left:22px}blockquote{background:#0F1117;color:#FAF8F3;border-radius:10px;padding:18px 20px;font-family:'Playfair Display',serif;font-style:italic;margin:12px 0}
+.note{font-size:13px;color:#6b6e76}footer{margin-top:40px;border-top:1px solid #e5ddcc;padding-top:14px;font-size:13px;color:#6b6e76}
+footer a{color:#8f6512;font-weight:700}@media print{body{padding:0}}</style></head><body><div class="page">
+<div class="kicker">Voice Print™ Report</div>
+<h1>${g('name')}</h1>
+<div class="one">${g('oneline')}</div>
+<p class="note">Hand this page to anyone who writes for ${g('name')} — a ghostwriter, a VA, a marketer, or an AI. It is the definition of the voice. Do not improvise around it.</p>
+<h2>Tone</h2><p>${g('tone')}</p>
+<h2>Who this voice speaks to</h2><p>${g('who')}</p>
+<h2>The story behind the voice</h2><p>${g('story')}</p>
+<h2>Signature phrases — word-for-word or not at all</h2><ul>${phr}</ul>
+<h2>Banned — never use</h2><ul>${ban}</ul>
+<h2>What it sounds like</h2><blockquote>${g('sample').replace(/\n/g,'<br>')}</blockquote>
+<h2>Proof</h2><p>${g('proof')}</p>
+<h2>Every piece ends here</h2><p>${g('cta')}</p>
+<footer>Built with <a href="https://voiceprint-exitproof.netlify.app">The Voice Print™</a> · part of the <a href="https://exit-proof.com">Exit-Proof™</a> framework by Kwame Kuadey · We should all be known.</footer>
+</div></body></html>`;
+}
+
+function downloadFile(content, filename, type){
+  const blob = new Blob([content], {type});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+async function submitLead(email){
+  const body = new URLSearchParams({'form-name':'voiceprint-leads', name: state.name||'', email, brand: state.brand||''});
+  try {
+    await fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body.toString()});
+  } catch(e) { /* never block the person on a network hiccup */ }
+}
+
+function bonusHtml(){
+  if (!state.__unlocked) return `
+    <div class="bonus" id="gate">
+      <h3>Two more tools, built from the same answers</h3>
+      <p><b>Your AI Voice Prompt</b> — paste it into ChatGPT, Claude, or Gemini and it writes like you, instantly.<br>
+      <b>Your Voice Print™ Report</b> — a one-page voice guide to hand to anyone who writes for you.</p>
+      <div class="gate">
+        <input type="email" id="lead-email" placeholder="you@yourcompany.com" autocomplete="email">
+        <button class="gold" id="unlock">Unlock both — free</button>
+      </div>
+      <p class="gate-note">The trade, plainly: you get both tools, I get to stay in touch about building a name that outlasts your business. Unsubscribe anytime. Your answers stay in your browser — only your name and email are sent.</p>
+      <p class="err" id="gate-err">That email doesn't look complete — check it and try again.</p>
+    </div>`;
+  return `
+    <div class="bonus">
+      <h3>Your AI Voice Prompt</h3>
+      <p>Paste into a new chat with any AI, then ask it to write your post, email, or script.</p>
+      <div class="unlocked-actions">
+        <button class="primary" id="copy-prompt">Copy the prompt</button>
+        <button class="ghost" id="dl-prompt">Download as .txt</button>
+      </div>
+    </div>
+    <div class="bonus">
+      <h3>Your Voice Print™ Report</h3>
+      <p>A branded one-pager. Open it, print it, or send it to whoever writes for you.</p>
+      <div class="unlocked-actions">
+        <button class="primary" id="dl-report">Download the report</button>
+      </div>
+    </div>`;
+}
+
+function wireBonus(){
+  if (!state.__unlocked){
+    document.getElementById('unlock').onclick = async ()=>{
+      const email = document.getElementById('lead-email').value.trim();
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){
+        document.getElementById('gate-err').style.display='block';
+        return;
+      }
+      await submitLead(email);
+      state.__unlocked = true; save();
+      renderFinish();
+    };
+    return;
+  }
+  document.getElementById('copy-prompt').onclick = async (e)=>{
+    await navigator.clipboard.writeText(buildPrompt());
+    e.target.textContent = 'Copied ✓';
+    setTimeout(()=>e.target.textContent='Copy the prompt', 1800);
+  };
+  document.getElementById('dl-prompt').onclick = ()=>downloadFile(buildPrompt(), 'my-ai-voice-prompt.txt', 'text/plain');
+  document.getElementById('dl-report').onclick = ()=>downloadFile(buildReport(), 'voice-print-report.html', 'text/html');
+}
+
 function renderFinish(){
   const card = document.getElementById('card');
   const md = generate();
@@ -358,21 +514,16 @@ function renderFinish(){
         <li>Open the folder in Claude and type: <b>run my one-for-ten</b>.</li>
       </ol>
       Don't have the system yet? It's at <a href="https://exit-proof.com"><b>exit-proof.com</b></a>.
-    </div>`;
-  document.getElementById('download').onclick = ()=>{
-    const blob = new Blob([generate()], {type:'text/markdown'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = 'voice-print.md';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  };
+    </div>
+    ${bonusHtml()}`;
+  document.getElementById('download').onclick = ()=>downloadFile(generate(), 'voice-print.md', 'text/markdown');
   document.getElementById('copy').onclick = async (e)=>{
     await navigator.clipboard.writeText(generate());
     e.target.textContent = 'Copied ✓';
     setTimeout(()=>e.target.textContent='Copy to clipboard', 1800);
   };
   document.getElementById('edit').onclick = ()=>{ step = 0; save(); render(); window.scrollTo(0,0); };
+  wireBonus();
 }
 
 render();
