@@ -125,14 +125,25 @@ const STEPS = [
         {v:'standalone', t:'I want AI content that sounds like me', d:'Not like AI. I\'ll use the voice file with ChatGPT, Claude, or Gemini.'},
         {v:'system', t:'I\'m setting up The One-for-Ten System™', d:'I own the system (or I\'m about to) and this file powers it.'}]},
       {id:'name', label:'Your name', req:true, type:'text', ph:'As it should appear on your content'},
-      {id:'brand', label:'Your business, brand, or project', type:'text', ph:'Use your own name if you don\'t have one — that\'s a personal brand. It counts.'},
+      {id:'intent', label:'What is this personal brand for?', req:true, type:'radio2', options:[
+        {v:'business', t:'Growing my current business', d:'I want to be the recognized expert in my industry. My content builds the company I run today.'},
+        {v:'newlane', t:'Building a new lane', d:'I want to be known for something different from my current business: a passion, an idea, or my next chapter.'}]},
+      {id:'brand', label:'Your business, brand, or project', type:'text', ph:'Use your own name if you don\'t have one — that\'s a personal brand. It counts.',
+        nlLabel:'The brand or idea you want to be known for', nlPh:'Name it, even loosely — a working name is enough'},
+      {id:'currentbiz', label:'Your current business (so we can set the boundary below)', type:'text', nlOnly:true, ph:'The company you run today'},
+      {id:'bizrole', label:'How should your current business show up in this new brand\'s content?', type:'select', nlOnly:true, options:[
+        'As proof only — mention the results, not the day-to-day',
+        'As occasional stories',
+        'Keep it out entirely'],
+        hint:'This becomes a hard rule. Plenty of strong personal brands borrow proof from a business they never talk about directly.'},
       {id:'website', label:'Your website(s)', type:'text', ph:'Optional — leave blank if you don\'t have one yet'},
     ]},
   { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 2 of 5', title:'Who you\'re talking to',
     why:'Content written for "everyone" reaches no one. Name the person.',
     fields:[
       {id:'audience', label:'Finish this sentence: I help [a specific person] who is dealing with [a specific moment or problem] get to [a specific result].', req:true, type:'textarea',
-        hint:'Specific enough that the right person would recognize themselves. "Entrepreneurs" is not a person.'},
+        hint:'Specific enough that the right person would recognize themselves. "Entrepreneurs" is not a person.',
+        nlHint:'The audience for the NEW brand — not necessarily your current customers. Specific enough that the right person would recognize themselves.'},
       {id:'story', label:'Your before-and-after story, in 4–6 sentences', req:true, type:'textarea', cls:'tall',
         hint:'Not your LinkedIn bio. What wasn\'t working, what changed, and one detail only you could tell. The struggle before the win carries more weight than the win.'},
       {id:'oneline', label:'How do you describe yourself in one line?', type:'text',
@@ -217,7 +228,8 @@ const STEPS = [
     why:'Real proof, used in the right places, is what separates authority from noise.',
     fields:[
       {id:'proofbank', label:'Up to five claims the AI may use — with the exact fact behind each, and where it belongs', type:'lines',
-        hint:'One per line. Bad: "industry leader." Good: "Built and sold X — use in founder-story content, not every post." Only claims you can stand behind publicly.'},
+        hint:'One per line. Bad: "industry leader." Good: "Built and sold X — use in founder-story content, not every post." Only claims you can stand behind publicly.',
+        nlHint:'One per line, with where each belongs. Results from your current business COUNT here, even though your new brand is about something else — borrowed proof is still proof. Only claims you can stand behind publicly.'},
       {id:'proofpoint', label:'The ONE proof point that must never get buried', reqSys:true, type:'textarea',
         hint:'The single line that makes a stranger take you seriously. In The One-for-Ten System™ it appears in every run\'s LinkedIn post and newsletter.'},
       {id:'testimonials', label:'Testimonials you can quote', type:'textarea',
@@ -239,7 +251,8 @@ const STEPS = [
     fields:[
       {id:'products', label:'Your products or offers (up to three)', type:'lines',
         hint:'One per line, with price if you name it publicly.',
-        altLabel:'Anything you\'d like the AI to mention — services, resources, projects', altHint:'Optional. One per line. Leave blank if you only want better writing.'},
+        altLabel:'Anything you\'d like the AI to mention — services, resources, projects', altHint:'Optional. One per line. Leave blank if you only want better writing.',
+        nlHint:'One per line — or leave blank. A new lane may have nothing to sell yet; visibility first is a strategy.'},
       {id:'flagship', label:'Anything beyond the flagship?', type:'text', hint:'A premium program, retainer, or 1:1 offer.', sysOnly:true},
       {id:'cta', label:'Your PRIMARY call-to-action — the exact invitation + link', reqSys:true, type:'text',
         hint:'Word-for-word, with the link. Your default close — used when the piece has earned it.',
@@ -282,16 +295,21 @@ function renderProgress(){
     `<span class="${step>=FINISH?'done':''}"></span>`;
 }
 
+const NL = () => state.intent === 'newlane';
+const fLabel = f => (NL() && f.nlLabel) ? f.nlLabel : ((!SYS() && f.altLabel) ? f.altLabel : f.label);
+const fHint  = f => (NL() && f.nlHint)  ? f.nlHint  : ((!SYS() && f.altHint)  ? f.altHint  : f.hint);
+const fSkip  = f => (f.sysOnly && !SYS()) || (f.nlOnly && !NL());
+
 function fieldHtml(f){
-  if (f.sysOnly && !SYS()) return '';
-  const label = (!SYS() && f.altLabel) ? f.altLabel : f.label;
-  const hint  = (!SYS() && f.altHint)  ? f.altHint  : f.hint;
+  if (fSkip(f)) return '';
+  const label = fLabel(f);
+  const hint  = fHint(f);
   const isReq = f.req || (f.reqSys && SYS());
   const v = state[f.id];
   const req = isReq ? ' <span class="req">*</span>' : '';
   let control = '';
   if (f.type==='text')
-    control = `<input type="text" id="${f.id}" value="${esc(v||'').replace(/"/g,'&quot;')}" placeholder="${f.ph||''}">`;
+    control = `<input type="text" id="${f.id}" value="${esc(v||'').replace(/"/g,'&quot;')}" placeholder="${(NL() && f.nlPh) ? f.nlPh : (f.ph||'')}">`;
   else if (f.type==='textarea' || f.type==='lines')
     control = `<textarea id="${f.id}" class="${f.cls||''}" placeholder="${f.ph||''}">${esc(v||'')}</textarea>`;
   else if (f.type==='select')
@@ -313,7 +331,7 @@ function fieldHtml(f){
 
 function collect(fields){
   fields.forEach(f=>{
-    if (f.sysOnly && !SYS()) return;
+    if (fSkip(f)) return;
     if (f.type==='checks')
       state[f.id] = [...document.querySelectorAll(`input[data-group="${f.id}"]:checked`)].map(x=>x.value);
     else if (f.type==='radio2'){
@@ -332,14 +350,14 @@ function collect(fields){
 
 function missingRequired(fields){
   return fields.filter(f=>{
-    if (f.sysOnly && !SYS()) return false;
+    if (fSkip(f)) return false;
     const isReq = f.req || (f.reqSys && SYS());
     if (!isReq) return false;
     const v = state[f.id];
     if (f.type==='pairs') return !(v||[]).filter(Boolean).length;
     if (Array.isArray(v)) return !v.length;
     return !(v||'').trim();
-  }).map(f=>((!SYS() && f.altLabel) ? f.altLabel : f.label).split(':')[0]);
+  }).map(f=>fLabel(f).split(':')[0]);
 }
 
 function render(){
@@ -374,6 +392,8 @@ function render(){
         }
       }
       collect(s.fields);
+      // intent/path reshape questions on this screen — re-render, values kept in state
+      if (e.target.name==='intent' || e.target.name==='path') render();
     }));
   document.getElementById('back').onclick = ()=>{ collect(s.fields); step--; if (STEPS[step]?.gate) step--; save(); render(); window.scrollTo(0,0); };
   document.getElementById('next').onclick = ()=>{
@@ -453,6 +473,9 @@ Update it whenever your offer, links, or positioning change. -->
 - Business/brand: ${g('brand') || g('name')}
 - Website: ${g('website') || '(none yet)'}
 - Using this as: ${SYS() ? 'One-for-Ten System™ configuration' : 'standalone voice file for AI writing'}
+- This brand is for: ${NL() ? 'a NEW LANE — being known for something beyond my current business' : 'growing my current business — becoming the recognized expert in my industry'}${NL() ? `
+- My current business: ${g('currentbiz') || '(not named)'}
+- HARD RULE — my current business appears in this brand's content: ${g('bizrole') || 'As proof only — mention the results, not the day-to-day'}. Never as the main subject.` : ''}
 
 ## Who I help
 - Who I help: ${g('audience')}
@@ -541,6 +564,7 @@ hard rules.
 WHO I AM: ${g('name')}${g('brand') && g('brand')!==g('name') ? ', '+g('brand') : ''}. ${g('oneline')}
 MY STORY: ${g('story')}
 WHO I WRITE FOR: ${g('audience')}
+${NL() ? 'THE LANE — HARD RULE: this brand is about being known for something beyond my current business'+(g('currentbiz') ? ' ('+g('currentbiz')+')' : '')+'. My current business appears in content '+({'As proof only — mention the results, not the day-to-day':'ONLY as proof — mention its results, never its day-to-day, never as the subject','As occasional stories':'only as occasional stories or proof — never as the main subject','Keep it out entirely':'NEVER — do not mention it at all'}[g('bizrole')] || 'only as proof — never as the subject')+'.' : ''}
 
 MY VOICE, IN CONTRASTS: ${pairsChosen().join('; ') || 'see samples'}.
 HOW STRONGLY I STATE OPINIONS: ${g('certainty') || 'match my samples'}.
@@ -622,6 +646,7 @@ footer a{color:#8f6512;font-weight:700}@media print{body{padding:0}}</style></he
 <p class="note">Hand this page to anyone who writes for ${G('name')} — a ghostwriter, a VA, a marketer, or an AI. It is the definition of the voice. Do not improvise around it.</p>
 <h2>The voice, in contrasts</h2><p>${esc(pairsChosen().join(' · ')) || '(see the sample below)'}${g('tone') ? ' — in their own words: '+G('tone') : ''}</p>
 <h2>Who this voice speaks to</h2><p>${G('audience')}</p>
+${NL() ? '<h2>The lane</h2><p>This brand is a new lane — being known for something beyond the current business'+(g('currentbiz') ? ' ('+G('currentbiz')+')' : '')+'. Hard rule: the current business appears in content '+(G('bizrole')||'as proof only').toLowerCase()+' — never as the main subject.</p>' : ''}
 <h2>Who ${G('name')} is to the reader</h2><p>${esc((state.roles||[]).join(' and ')) || '(see sample)'} — ${G('certainty') || ''}. Written as ${G('iwe') || '"I"'}.</p>
 <h2>The story behind the voice</h2><p>${G('story')}</p>
 <h2>What this voice stands for</h2><p>${G('belief')}</p>
