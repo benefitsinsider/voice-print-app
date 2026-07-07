@@ -3,84 +3,103 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Voice Print™ — sound like you, everywhere</title>
-<meta name="description" content="Answer a short set of questions and get your Voice Print™ — the file that teaches The One-for-Ten System™ to write in your voice, not a robot's.">
+<title>The Voice Print™ — make AI sound like you</title>
+<meta name="description" content="AI writes fast. It just can't sound like you — until you teach it. Fifteen minutes of honest answers builds your voice file for ChatGPT, Claude, Gemini, or The One-for-Ten System™.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#FAF8F3; --soft:#F1ECE1; --ink:#0F1117; --mut:#6b6e76;
+    --cream:#FAF8F3; --soft:#F1ECE1; --ink:#0F1117; --mut:#5c5f66;
     --gold:#B8841A; --gold-deep:#8f6512; --line:#e5ddcc;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--cream);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh}
-  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  body{background:var(--cream);color:var(--ink);font-family:'DM Sans',system-ui,sans-serif;font-size:17px;line-height:1.65;min-height:100vh}
+  .wrap{max-width:780px;margin:0 auto;padding:32px 20px 80px}
   header{text-align:center;padding:28px 0 8px}
-  .brandline{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
-  h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,44px);font-weight:700;margin:10px 0 6px}
-  .sub{color:var(--mut);max-width:520px;margin:0 auto}
-  .privacy{display:inline-block;margin-top:14px;font-size:13px;color:var(--gold-deep);background:var(--soft);border:1px solid var(--line);border-radius:99px;padding:5px 14px}
-  .progress{display:flex;gap:6px;margin:30px 0 22px}
-  .progress span{flex:1;height:4px;border-radius:2px;background:var(--line);transition:background .3s}
+  .brandline{font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep);font-weight:700}
+  h1{font-family:'Playfair Display',serif;font-size:clamp(34px,5.5vw,48px);font-weight:700;margin:10px 0 10px}
+  .sub{color:var(--ink);max-width:600px;margin:0 auto;font-size:18px}
+  .sub b{color:var(--gold-deep)}
+  .privacy{display:inline-block;margin-top:16px;font-size:15px;color:var(--gold-deep);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:8px 16px;max-width:560px}
+  .progress{display:flex;gap:5px;margin:30px 0 22px}
+  .progress span{flex:1;height:5px;border-radius:3px;background:var(--line);transition:background .3s}
   .progress span.done{background:var(--gold)}
-  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:32px 30px;box-shadow:0 2px 14px rgba(15,17,23,.05)}
-  .step-kicker{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:6px}
-  h2{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:4px}
-  .why{color:var(--mut);font-size:14.5px;margin-bottom:22px}
-  .field{margin-bottom:20px}
-  label{display:block;font-weight:700;font-size:15px;margin-bottom:4px}
-  label .req{color:var(--gold-deep)}
-  .hint{font-size:13px;color:var(--mut);margin-bottom:7px}
-  input[type=text],textarea,select{
-    width:100%;border:1px solid var(--line);border-radius:9px;background:var(--cream);
-    padding:11px 13px;font:inherit;font-size:15px;color:var(--ink)
+  .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px 32px;box-shadow:0 2px 16px rgba(15,17,23,.06)}
+  .step-kicker{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:8px}
+  h2{font-family:'Playfair Display',serif;font-size:29px;font-weight:700;margin-bottom:6px}
+  .why{color:var(--mut);font-size:16.5px;margin-bottom:24px}
+  .field{margin-bottom:24px}
+  label.flabel{display:block;font-weight:700;font-size:17px;margin-bottom:5px;line-height:1.45}
+  label.flabel .req{color:var(--gold-deep)}
+  .hint{font-size:15px;color:var(--mut);margin-bottom:9px;line-height:1.55}
+  input[type=text],input[type=email],textarea,select{
+    width:100%;border:1.5px solid var(--line);border-radius:10px;background:var(--cream);
+    padding:13px 15px;font:inherit;font-size:16.5px;color:var(--ink)
   }
-  textarea{min-height:88px;resize:vertical}
-  textarea.tall{min-height:130px}
-  input:focus,textarea:focus,select:focus{outline:2px solid var(--gold);outline-offset:0;border-color:var(--gold)}
-  .checks{display:flex;flex-wrap:wrap;gap:9px}
-  .checks label{display:inline-flex;align-items:center;gap:7px;font-weight:500;font-size:14.5px;
-    border:1px solid var(--line);border-radius:99px;padding:7px 14px;cursor:pointer;background:var(--cream)}
-  .checks input{accent-color:var(--gold-deep)}
+  textarea{min-height:96px;resize:vertical}
+  textarea.tall{min-height:140px}
+  input:focus,textarea:focus,select:focus{outline:2.5px solid var(--gold);outline-offset:0;border-color:var(--gold)}
+  .checks{display:flex;flex-wrap:wrap;gap:10px}
+  .checks label{display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:15.5px;
+    border:1.5px solid var(--line);border-radius:99px;padding:9px 16px;cursor:pointer;background:var(--cream)}
+  .checks input{accent-color:var(--gold-deep);width:16px;height:16px}
   .checks label:has(input:checked){border-color:var(--gold);background:var(--soft);font-weight:700}
-  .nav{display:flex;justify-content:space-between;gap:12px;margin-top:28px}
-  button{font:inherit;font-weight:700;border-radius:10px;padding:12px 26px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink)}
+  .cards2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .cards2 label{border:1.5px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;background:var(--cream);font-size:16px;line-height:1.5;display:block}
+  .cards2 label b{display:block;font-size:16.5px;margin-bottom:3px}
+  .cards2 input{position:absolute;opacity:0}
+  .cards2 label:has(input:checked){border-color:var(--gold);background:var(--soft);box-shadow:0 0 0 1.5px var(--gold)}
+  .pairrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin-bottom:10px}
+  .pairrow .or{color:var(--mut);font-size:14.5px}
+  .pairrow label{border:1.5px solid var(--line);border-radius:10px;padding:11px 14px;cursor:pointer;background:var(--cream);text-align:center;font-size:15.5px;display:block}
+  .pairrow input{position:absolute;opacity:0}
+  .pairrow label:has(input:checked){border-color:var(--gold);background:var(--soft);font-weight:700}
+  .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:30px;flex-wrap:wrap}
+  button{font:inherit;font-size:16.5px;font-weight:700;border-radius:11px;padding:14px 28px;cursor:pointer;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
   button.primary{background:var(--ink);color:var(--cream);border-color:var(--ink)}
   button.primary:hover{background:#000}
   button.gold{background:var(--gold);border-color:var(--gold);color:var(--ink)}
   button.gold:hover{background:var(--gold-deep);border-color:var(--gold-deep);color:var(--cream)}
-  button.ghost:hover{border-color:var(--gold)}
-  .err{color:#a33;font-size:13.5px;margin-top:10px;display:none}
-  pre{background:var(--ink);color:var(--cream);border-radius:12px;padding:22px;font-size:12.5px;line-height:1.55;
+  button.ghost{color:var(--mut)}
+  button.ghost:hover{border-color:var(--gold);color:var(--ink)}
+  .err{color:#a33;font-size:15.5px;margin-top:12px;display:none;font-weight:700}
+  pre{background:var(--ink);color:var(--cream);border-radius:12px;padding:24px;font-size:13.5px;line-height:1.6;
     overflow:auto;max-height:420px;white-space:pre-wrap;word-break:break-word}
-  .finish-actions{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
-  .nextsteps{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:20px 22px;font-size:15px}
-  .nextsteps ol{margin-left:20px}
-  .nextsteps li{margin:6px 0}
-  .bonus{border:1px solid var(--line);border-radius:12px;padding:22px;margin-top:16px;background:var(--cream)}
-  .bonus h3{font-family:'Playfair Display',serif;font-size:19px;margin-bottom:4px}
-  .bonus p{font-size:14.5px;color:var(--mut)}
-  .gate{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-  .gate input{flex:1;min-width:220px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:11px 13px;font:inherit;font-size:15px}
-  .gate-note{font-size:12.5px;color:var(--mut);margin-top:8px}
-  .unlocked-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-  footer{text-align:center;margin-top:46px;color:var(--mut);font-size:13.5px}
+  .finish-actions{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+  .nextsteps{background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px 24px;font-size:16.5px}
+  .nextsteps ol{margin-left:22px}
+  .nextsteps li{margin:7px 0}
+  .bonus{border:1.5px solid var(--line);border-radius:14px;padding:24px;margin-top:18px;background:var(--cream)}
+  .bonus h3{font-family:'Playfair Display',serif;font-size:21px;margin-bottom:6px}
+  .bonus p{font-size:16px;color:var(--ink)}
+  .gate-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .gate-form input{flex:1;min-width:230px;border:1.5px solid var(--line);border-radius:10px;background:#fff;padding:13px 15px;font:inherit;font-size:16.5px}
+  .gate-note{font-size:14.5px;color:var(--mut);margin-top:10px;line-height:1.55}
+  .unlocked-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .gatechoice{text-align:center;padding:14px 0 4px}
+  .gatechoice .big{font-family:'Playfair Display',serif;font-size:24px;margin-bottom:8px}
+  .gatechoice p{color:var(--mut);font-size:16.5px;max-width:520px;margin:0 auto 20px}
+  footer{text-align:center;margin-top:48px;color:var(--mut);font-size:15px}
   footer a{color:var(--gold-deep);font-weight:700;text-decoration:none}
-  .sig{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--ink);margin-bottom:6px}
-  @media (max-width:520px){.card{padding:24px 18px}}
+  .sig{font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--ink);margin-bottom:6px}
+  @media (max-width:560px){.card{padding:26px 18px}.cards2{grid-template-columns:1fr}.pairrow{grid-template-columns:1fr;gap:6px}.pairrow .or{display:none}}
 </style>
 </head>
 <body>
 <form name="voiceprint-leads" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name"><input type="email" name="email"><input type="text" name="brand"><input type="text" name="bot-field">
+  <input type="text" name="name"><input type="email" name="email"><input type="text" name="brand"><input type="text" name="path"><input type="text" name="phase"><input type="text" name="bot-field">
 </form>
 <div class="wrap">
   <header>
     <div class="brandline">Exit-Proof™ · The One-for-Ten System™</div>
     <h1>The Voice Print™</h1>
-    <p class="sub">Fifteen minutes of honest answers. In return, every piece of content the system ever writes sounds like you — not a robot, not a marketer. You.</p>
-    <span class="privacy">Your answers never leave this browser — they're stored only on your own computer. The one exception: your name and email, and only if you choose to leave them at the end.</span>
+    <p class="sub">AI can write fast. It just can't sound like <b>you</b> — until you teach it.
+    Fifteen minutes of honest answers builds your voice file: paste it into ChatGPT, Claude,
+    or Gemini and stop rewriting robot drafts — or drop it into The One-for-Ten System™ and
+    power every piece it creates.</p>
+    <span class="privacy">Your answers never leave this browser — they're stored only on your own
+    computer. The one exception: your name and email, and only if you choose to leave them.</span>
   </header>
 
   <div class="progress" id="progress"></div>
@@ -94,164 +113,269 @@
 </div>
 
 <script>
-const STORE_KEY = 'voiceprint-v1';
+const STORE_KEY = 'voiceprint-v2';
+const SYS = () => state.path === 'system';
 
-// type: text | textarea | lines (one-per-line textarea) | checks | select
+// field types: text | textarea | lines | checks | select | radio2 | pairs
 const STEPS = [
-  {
-    kicker:'Step 1 of 11', title:'You', why:'The basics that sign every piece.',
+  { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 1 of 5', title:'You',
+    why:'The basics that sign every piece you publish.',
     fields:[
-      {id:'name', label:'Your name', req:true, type:'text', ph:'e.g., Kwame Kuadey'},
-      {id:'brand', label:'Your business or brand', req:true, type:'text', ph:'e.g., Exit-Proof™'},
-      {id:'website', label:'Your website(s)', type:'text', ph:'e.g., exit-proof.com (personal site: kwamekuadey.com)'},
-    ]
-  },
-  {
-    kicker:'Step 2 of 11', title:'Who you help', why:'The system points every piece at these people. Be specific — "everyone" produces content for no one.',
+      {id:'path', label:'What brings you here?', type:'radio2', options:[
+        {v:'standalone', t:'I want AI content that sounds like me', d:'Not like AI. I\'ll use the voice file with ChatGPT, Claude, or Gemini.'},
+        {v:'system', t:'I\'m setting up The One-for-Ten System™', d:'I own the system (or I\'m about to) and this file powers it.'}]},
+      {id:'name', label:'Your name', req:true, type:'text', ph:'As it should appear on your content'},
+      {id:'brand', label:'Your business, brand, or project', type:'text', ph:'Use your own name if you don\'t have one — that\'s a personal brand. It counts.'},
+      {id:'website', label:'Your website(s)', type:'text', ph:'Optional — leave blank if you don\'t have one yet'},
+    ]},
+  { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 2 of 5', title:'Who you\'re talking to',
+    why:'Content written for "everyone" reaches no one. Name the person.',
     fields:[
-      {id:'who', label:'Who do you help?', req:true, type:'textarea', ph:'The specific person, at the specific moment they need you.'},
-      {id:'comeleave', label:'Why do people come to you — and what do they leave with?', type:'textarea', hint:'The problem that brings them in the door, and the change they walk out with.'},
-      {id:'story', label:'Your story — the part only you can tell', req:true, type:'textarea', cls:'tall', hint:'The honest version. The struggle before the win carries more weight than the win.'},
-      {id:'oneline', label:'How do you describe yourself in one line?', req:true, type:'text', ph:'"I help ___ become ___ — so that ___."'},
-      {id:'notfor', label:'Who are you NOT for?', type:'textarea', hint:'Naming who you don\'t serve keeps your voice from drifting toward hype.'},
-    ]
-  },
-  {
-    kicker:'Step 3 of 11', title:'How you sound', why:'This is the heart of the Voice Print. The system treats these as law.',
+      {id:'audience', label:'Finish this sentence: I help [a specific person] who is dealing with [a specific moment or problem] get to [a specific result].', req:true, type:'textarea',
+        hint:'Specific enough that the right person would recognize themselves. "Entrepreneurs" is not a person.'},
+      {id:'story', label:'Your before-and-after story, in 4–6 sentences', req:true, type:'textarea', cls:'tall',
+        hint:'Not your LinkedIn bio. What wasn\'t working, what changed, and one detail only you could tell. The struggle before the win carries more weight than the win.'},
+      {id:'oneline', label:'How do you describe yourself in one line?', type:'text',
+        hint:'Optional — used as the headline on your report and in bios.'},
+      {id:'notfor', label:'Who are you NOT for?', type:'textarea',
+        hint:'Optional. Naming who you don\'t serve keeps your voice from drifting toward hype.'},
+    ]},
+  { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 3 of 5', title:'How you sound',
+    why:'This is the heart of your Voice Print. Honest answers beat polished answers.',
     fields:[
-      {id:'tone', label:'Your tone in three words', req:true, type:'text', ph:'e.g., Honest, direct, generous'},
-      {id:'phrases', label:'Signature phrases — things you actually say', type:'lines', hint:'One per line. The system will use these word-for-word or not at all — never reworded.'},
-      {id:'banned', label:'Banned words and phrases', type:'lines', hint:'One per line. Words that make you cringe when marketers use them. The system will never use these.'},
-      {id:'sample', label:'A short WRITTEN sample that sounds MOST like you', req:true, type:'textarea', cls:'tall', hint:'A paragraph you wrote that you\'d be proud to have quoted back. This calibrates everything.'},
-      {id:'sample2', label:'A SPOKEN sample (strongly recommended)', type:'textarea', cls:'tall', hint:'Paste ~60 seconds of you talking — from any voice memo or video transcript, unedited. You sound different out loud than on the page; this captures the difference.'},
-      {id:'humor', label:'Humor, stories, and off-limits topics', type:'textarea', hint:'How you use stories and humor — and anything the system must never bring up.'},
-    ]
-  },
-  {
-    kicker:'Step 4 of 11', title:'What you stand for', why:'Voice isn\'t just rhythm — it\'s a point of view. This is what makes your content impossible to confuse with a competitor\'s.',
+      {id:'pairs', label:'Pick the side of each pair that sounds more like you', req:true, type:'pairs',
+        hint:'Choose what a close client would recognize — not what you wish you sounded like. Skip a pair if neither fits.',
+        options:[['More direct','More diplomatic'],['More conversational','More polished'],['More serious','More playful'],['More encouraging','More challenging'],['More concise','More expansive'],['More practical','More reflective']]},
+      {id:'tone', label:'Your tone in three words (optional)', type:'text', ph:'Only if you know exactly what they are'},
+      {id:'sample', label:'Paste a WRITTEN sample that sounds most like you', req:true, type:'textarea', cls:'tall',
+        hint:'A post, an email, or a transcript — anything YOU actually wrote. The test: you\'d be proud to have it quoted back.'},
+      {id:'sample2', label:'Paste a SPOKEN sample', type:'textarea', cls:'tall',
+        hint:'The highest-value upgrade on this page. About 60 seconds of you talking, unedited, from any voice memo or video transcript.'},
+      {id:'antivoice', label:'The "that\'s not me" test: write one sentence that would sound embarrassingly unlike you — and say why', type:'textarea',
+        hint:'Example: "I\'m SO thrilled to announce this game-changing journey!" This catches what a banned-word list misses.'},
+    ]},
+  { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 4 of 5', title:'What you stand for',
+    why:'Voice isn\'t just rhythm — it\'s a point of view. This is what makes your content impossible to confuse with anyone else\'s.',
     fields:[
-      {id:'beliefs', label:'What do you believe that most people in your field get wrong?', req:true, type:'textarea', cls:'tall', hint:'The thing you find yourself arguing. One to three plain sentences.'},
-      {id:'hill', label:'The one idea you\'d defend anywhere', type:'text', ph:'The hill you\'ll die on, in one line.'},
-      {id:'iwe', label:'When you write, you are…', type:'select', options:['"I" — I speak as myself (recommended for a personal brand)','"We" — I speak for my company','Mixed — "I" for stories, "we" for the business']},
-      {id:'stylerules', label:'How your writing behaves', type:'checks', options:['Short, punchy sentences','Longer, flowing paragraphs','Contractions (I\'m, don\'t, can\'t)','Questions straight to the reader','Plain words over industry vocabulary','Numbers and specifics over adjectives']},
-    ]
-  },
-  {
-    kicker:'Step 5 of 11', title:'Where you show up', why:'So hooks are written for the platform your people actually see.',
+      {id:'belief', label:'Complete this: Most people in my field tell you to ____. I think that\'s wrong because ____. What I tell people instead is ____.', req:true, type:'textarea', cls:'tall',
+        hint:'The belief you come back to again and again — not a safe opinion everyone already agrees with.'},
+      {id:'certainty', label:'How strongly do you state opinions?', type:'select', options:[
+        'I say what I believe directly',
+        'I make a clear claim, then explain the nuance',
+        'I show both sides before giving my view',
+        'I ask questions and let people reach the conclusion']},
+      {id:'roles', label:'When you write to your audience, who are you to them?', type:'checks', max:2,
+        hint:'Choose up to two — the role you naturally play, not the one that sounds most impressive.',
+        options:['A peer who gets it','A teacher','A practical guide','A challenger','An encourager','An advocate','A straight-talking expert']},
+      {id:'iwe', label:'When you write, you are…', type:'select', options:[
+        '"I" — I speak as myself (recommended for a personal brand)',
+        '"We" — I speak for my company',
+        'Mixed — "I" for stories, "we" for the business']},
+    ]},
+  { phase:1, pk:'Phase 1 · Your Core Voice', n:'Step 5 of 5', title:'How your writing behaves',
+    why:'The mechanics that make text feel like a specific human wrote it.',
+    fields:[
+      {id:'argopen', label:'When you explain an idea, how do you usually begin?', type:'checks', max:2,
+        hint:'Choose up to two — what you naturally do, not what you think you should do.',
+        options:['A bold opinion','A short story','Naming a problem','A question','A number or result','The common mistake','Steps']},
+      {id:'habits', label:'Your writing habits — check everything you actually do now', type:'checks',
+        options:['Short, punchy sentences','Longer, flowing paragraphs','Sentence fragments','One-line paragraphs','Contractions (I\'m, don\'t, can\'t)','Questions straight to the reader','Em dashes','Parentheses','Bullets and lists','Almost no exclamation points','Occasional ALL-CAPS emphasis','Plain words over jargon','No emojis','Emojis are fine','Numbers and specifics over adjectives']},
+      {id:'visual', label:'On screen, your writing looks like…', type:'select', options:[
+        'Short lines with lots of white space',
+        'Dense, traditional paragraphs',
+        'A mix of both']},
+      {id:'proofstyle', label:'What do you reach for first when you want someone to believe you?', type:'checks', max:2,
+        options:['Personal experience','A client or customer story','Numbers or results','Research or expert sources','A simple example','Common-sense logic']},
+    ]},
+  { gate:true },
+  { phase:2, pk:'Phase 2 · Make It Harder to Copy', n:'Step 6 of 12', title:'Your fingerprint',
+    why:'Optional — every answer here makes your voice harder to fake.',
+    fields:[
+      {id:'phrases', label:'Phrases you actually say — and where each belongs', type:'lines',
+        hint:'One per line, with context. Example: "Here\'s the truth" — for opening a direct post, occasionally. They\'ll be used word-for-word or not at all, and never forced into every piece.'},
+      {id:'openers', label:'How you start a tough point', type:'lines',
+        hint:'One per line. Example: "Look," "Here\'s the thing," "But." The little anchors that make text sound like you talking.'},
+      {id:'banned', label:'Banned words, phrases, and styles', type:'lines',
+        hint:'One per line, full examples where you can: "I\'m thrilled to announce…", "Let\'s dive in", fake enthusiasm. These will never appear.'},
+      {id:'worlds', label:'The worlds you borrow examples from', type:'lines',
+        hint:'Up to three, one per line: sports, parenting, faith, cooking, music, investing, military, travel… Leave blank if none fit.'},
+    ]},
+  { phase:2, pk:'Phase 2 · Make It Harder to Copy', n:'Step 7 of 12', title:'Your range',
+    why:'Optional — how your voice moves depending on what you\'re writing.',
+    fields:[
+      {id:'feel', label:'What should people most often FEEL after reading you?', type:'checks', max:3,
+        hint:'Choose up to three — the feeling your best content actually creates.',
+        options:['Clearer','More confident','Challenged','Seen or understood','Urgent to act','Relieved','Hopeful','More ambitious','Amused']},
+      {id:'modes', label:'Does your voice change when teaching vs. telling a story vs. promoting?', type:'textarea',
+        hint:'Tell us what changes. Example: "More direct when teaching, more personal in stories, more restrained when selling."'},
+      {id:'humor', label:'Humor, stories, and off-limits topics', type:'textarea',
+        hint:'How you use stories and humor — and anything that must never come up.'},
+      {id:'unusable', label:'What would make an AI-written piece unusable for you, even if technically correct?', type:'textarea',
+        hint:'Examples: "Too hypey." "Sounds like a LinkedIn influencer." "Makes promises I wouldn\'t make." "Tries too hard to be funny."'},
+    ]},
+  { phase:2, pk:'Phase 2 · Make It Harder to Copy', n:'Step 8 of 12', title:'Your proof bank',
+    why:'Real proof, used in the right places, is what separates authority from noise.',
+    fields:[
+      {id:'proofbank', label:'Up to five claims the AI may use — with the exact fact behind each, and where it belongs', type:'lines',
+        hint:'One per line. Bad: "industry leader." Good: "Built and sold X — use in founder-story content, not every post." Only claims you can stand behind publicly.'},
+      {id:'proofpoint', label:'The ONE proof point that must never get buried', reqSys:true, type:'textarea',
+        hint:'The single line that makes a stranger take you seriously. In The One-for-Ten System™ it appears in every run\'s LinkedIn post and newsletter.'},
+      {id:'testimonials', label:'Testimonials you can quote', type:'textarea',
+        hint:'With permission, word-for-word. Leave blank if you\'re still collecting.'},
+    ]},
+  { phase:3, pk:'Phase 3 · Hook It to Your Business', n:'Step 9 of 12', title:'Where you show up',
+    why:'Output settings — so hooks are written for the platform your people actually see.',
+    whyAlt:'Optional if you just want better writing — but a platform makes your AI prompt sharper.',
     fields:[
       {id:'platforms', label:'Platforms you publish on', type:'checks',
         options:['LinkedIn','YouTube','Instagram','TikTok','X / Threads','Facebook','Substack','Email newsletter','Podcast']},
-      {id:'primary', label:'Your PRIMARY platform', req:true, type:'text', hint:'Hooks get optimized for this one first.', ph:'e.g., LinkedIn'},
+      {id:'primary', label:'Your PRIMARY platform', reqSys:true, type:'text', ph:'e.g., LinkedIn', hint:'Hooks get optimized for this one first.'},
       {id:'hashrule', label:'Your hashtag rule', type:'select', options:['None — I don\'t use hashtags','A few (0–3) where they help','Platform-specific sets (list below)']},
       {id:'hashsets', label:'Your hashtag sets (if any)', type:'textarea', hint:'Leave blank if you don\'t use them.'},
-    ]
-  },
-  {
-    kicker:'Step 6 of 11', title:'What you sell', why:'Hard rule of the system: every piece ends at a destination you own. These are the destinations.',
+    ]},
+  { phase:3, pk:'Phase 3 · Hook It to Your Business', n:'Step 10 of 12', title:'Where every piece points',
+    why:'Rule of the system: every piece ends at a destination you own. These are the destinations.',
+    whyAlt:'Optional. If you promote nothing, leave this blank — your writing still gets your voice.',
     fields:[
-      {id:'products', label:'Your products or offers (up to three)', type:'lines', hint:'One per line, with price if you name it publicly. e.g., "The One-for-Ten System™ — turn one video into ten pieces. $297."'},
-      {id:'flagship', label:'Anything beyond the flagship?', type:'text', hint:'A premium program, retainer, or 1:1 offer.'},
-      {id:'cta', label:'PRIMARY call-to-action — the exact invitation + link', req:true, type:'text', ph:'e.g., "Take the free Exit-Proof™ Assessment at exitproofscore.com"', hint:'Written exactly as it should appear. This closes every piece.'},
-      {id:'cta2', label:'Secondary CTA + link', type:'text', ph:'e.g., Subscribe to my newsletter at kwame.blog'},
-    ]
-  },
-  {
-    kicker:'Step 7 of 11', title:'Why you\'re qualified', why:'Proof beats promises. The system weaves this in so you never have to brag mid-post.',
+      {id:'products', label:'Your products or offers (up to three)', type:'lines',
+        hint:'One per line, with price if you name it publicly.',
+        altLabel:'Anything you\'d like the AI to mention — services, resources, projects', altHint:'Optional. One per line. Leave blank if you only want better writing.'},
+      {id:'flagship', label:'Anything beyond the flagship?', type:'text', hint:'A premium program, retainer, or 1:1 offer.', sysOnly:true},
+      {id:'cta', label:'Your PRIMARY call-to-action — the exact invitation + link', reqSys:true, type:'text',
+        hint:'Word-for-word, with the link. Your default close — used when the piece has earned it.',
+        altLabel:'When someone likes your content, what — if anything — should they do next?', altHint:'Reply, subscribe, follow, a link — or just think differently. Leave blank if you promote nothing.'},
+      {id:'cta2', label:'A secondary invitation (optional)', type:'text', ph:'e.g., Subscribe to my newsletter'},
+    ]},
+  { phase:3, pk:'Phase 3 · Hook It to Your Business', n:'Step 11 of 12', title:'First fuel',
+    why:'Your best existing content can be your first runs — no new recording needed.',
+    whyAlt:'Optional — a head start for whatever you write first.',
     fields:[
-      {id:'proof', label:'Your proof', req:true, type:'textarea', cls:'tall', hint:'Numbers, names, credentials, outcomes. Only what\'s true and verifiable — accuracy is the brand.'},
-      {id:'proofpoint', label:'The ONE proof point that must never get buried', req:true, type:'textarea', hint:'The single line that makes a stranger take you seriously. It appears in the LinkedIn post and newsletter of every run.'},
-      {id:'testimonials', label:'Testimonials you can quote', type:'textarea', hint:'With permission, word-for-word. Leave blank if you\'re still collecting.'},
-    ]
-  },
-  {
-    kicker:'Step 8 of 11', title:'Your archive', why:'Your best existing content can be your first runs — no new recording needed.',
+      {id:'archive', label:'Up to three existing pieces that sound most like you at your best', type:'lines',
+        hint:'One per line: real posts, emails, videos, transcripts — not website copy someone else wrote.'},
+      {id:'firstfive', label:'Five real questions people have asked you', type:'lines',
+        hint:'From comments, DMs, sales calls, conversations — written exactly as they asked them. Each one is a piece of content waiting to happen.'},
+    ]},
+  { phase:3, pk:'Phase 3 · Hook It to Your Business', n:'Step 12 of 12', title:'Production and vocabulary',
+    why:'How your clips and graphics should come out — and the words that must be spelled right.',
+    whyAlt:'Optional — skip straight to the finish if you just want the AI prompt.',
     fields:[
-      {id:'archive', label:'Up to five existing pieces worth repurposing', type:'lines', hint:'One per line: a YouTube link, a workshop recording, your best blog post, a podcast episode.'},
-    ]
-  },
-  {
-    kicker:'Step 9 of 11', title:'Your first five videos', why:'The questions prospects always ask you ARE your content calendar.',
-    fields:[
-      {id:'firstfive', label:'Five questions people always ask you', type:'lines', hint:'One per line, in their words. Each becomes a 10–25 minute video, which becomes ten pieces.'},
-    ]
-  },
-  {
-    kicker:'Step 10 of 11', title:'Production preferences', why:'How your clips and quote graphics should come out.',
-    fields:[
-      {id:'captions', label:'Captions burned into your clips?', type:'select', options:['Yes','No','I add my own in my editor']},
-      {id:'brandkit', label:'Brand colors + fonts for quote graphics', type:'textarea', hint:'Hex codes and font names if you have them. e.g., "Gold #B8841A, ink #0F1117, cream #FAF8F3. Playfair Display (headlines), DM Sans (body)." Leave blank and the system will ask.'},
-      {id:'anything', label:'Anything else the system should know', type:'textarea', hint:'Rules of thumb, pet peeves, the deeper idea behind your work.'},
-    ]
-  },
-  {
-    kicker:'Step 11 of 11', title:'Words you use', why:'Auto-transcription mangles names and brand terms. Words on this list come back spelled right. Your name, brand, products, and links are added automatically from your earlier answers.',
-    fields:[
-      {id:'keyterms', label:'Extra brand vocabulary', type:'lines', hint:'One per line: people\'s names, company names, acronyms, product names, anything transcription keeps getting wrong.'},
-    ]
-  },
+      {id:'captions', label:'Captions burned into your clips?', type:'select', options:['Yes','No','I add my own in my editor'], sysOnly:true},
+      {id:'brandkit', label:'Brand colors + fonts for quote graphics', type:'textarea',
+        hint:'Hex codes and font names if you have them. Leave blank and the system will ask.'},
+      {id:'keyterms', label:'Words you use — your brand vocabulary', type:'lines',
+        hint:'One per line: people\'s names, company names, acronyms, product names — anything auto-transcription keeps getting wrong. Your name, brand, offers, and links are added automatically from your earlier answers.'},
+    ]},
 ];
 
+const FINISH = STEPS.length;
 let state = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
-let step = state.__step || 0; // 0..STEPS.length (last = finish screen)
+if (!state.path) state.path = new URLSearchParams(location.search).get('path') === 'system' ? 'system' : (state.path || 'standalone');
+let step = state.__step ?? 0;
 
 function save(){ state.__step = step; localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
-
 function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+function lines(v){ return (v||'').split('\n').map(x=>x.trim()).filter(Boolean); }
 
 function renderProgress(){
   const p = document.getElementById('progress');
   p.innerHTML = STEPS.map((_,i)=>`<span class="${i<step?'done':''}"></span>`).join('') +
-    `<span class="${step>=STEPS.length?'done':''}"></span>`;
+    `<span class="${step>=FINISH?'done':''}"></span>`;
 }
 
 function fieldHtml(f){
+  if (f.sysOnly && !SYS()) return '';
+  const label = (!SYS() && f.altLabel) ? f.altLabel : f.label;
+  const hint  = (!SYS() && f.altHint)  ? f.altHint  : f.hint;
+  const isReq = f.req || (f.reqSys && SYS());
   const v = state[f.id];
-  const req = f.req ? ' <span class="req">*</span>' : '';
+  const req = isReq ? ' <span class="req">*</span>' : '';
   let control = '';
   if (f.type==='text')
     control = `<input type="text" id="${f.id}" value="${esc(v||'').replace(/"/g,'&quot;')}" placeholder="${f.ph||''}">`;
   else if (f.type==='textarea' || f.type==='lines')
     control = `<textarea id="${f.id}" class="${f.cls||''}" placeholder="${f.ph||''}">${esc(v||'')}</textarea>`;
   else if (f.type==='select')
-    control = `<select id="${f.id}">${f.options.map(o=>`<option ${v===o?'selected':''}>${o}</option>`).join('')}</select>`;
+    control = `<select id="${f.id}"><option value="">— choose —</option>${f.options.map(o=>`<option ${v===o?'selected':''}>${o}</option>`).join('')}</select>`;
   else if (f.type==='checks')
-    control = `<div class="checks">${f.options.map(o=>
-      `<label><input type="checkbox" data-group="${f.id}" value="${o}" ${(v||[]).includes(o)?'checked':''}>${o}</label>`).join('')}</div>`;
-  return `<div class="field"><label for="${f.id}">${f.label}${req}</label>${f.hint?`<div class="hint">${f.hint}</div>`:''}${control}</div>`;
+    control = `<div class="checks" data-max="${f.max||0}" data-group="${f.id}">${f.options.map(o=>
+      `<label><input type="checkbox" data-group="${f.id}" value="${esc(o).replace(/"/g,'&quot;')}" ${(v||[]).includes(o)?'checked':''}>${o}</label>`).join('')}</div>`;
+  else if (f.type==='radio2')
+    control = `<div class="cards2">${f.options.map(o=>
+      `<label><input type="radio" name="${f.id}" value="${o.v}" ${v===o.v?'checked':''}><b>${o.t}</b>${o.d}</label>`).join('')}</div>`;
+  else if (f.type==='pairs')
+    control = f.options.map((pair,i)=>`<div class="pairrow">
+      <label><input type="radio" name="pair-${i}" value="${esc(pair[0])}" ${(v||[])[i]===pair[0]?'checked':''}>${pair[0]}</label>
+      <span class="or">or</span>
+      <label><input type="radio" name="pair-${i}" value="${esc(pair[1])}" ${(v||[])[i]===pair[1]?'checked':''}>${pair[1]}</label>
+    </div>`).join('');
+  return `<div class="field"><label class="flabel" for="${f.id}">${label}${req}</label>${hint?`<div class="hint">${hint}</div>`:''}${control}</div>`;
 }
 
 function collect(fields){
   fields.forEach(f=>{
+    if (f.sysOnly && !SYS()) return;
     if (f.type==='checks')
-      state[f.id] = [...document.querySelectorAll(`[data-group="${f.id}"]:checked`)].map(x=>x.value);
-    else
-      state[f.id] = document.getElementById(f.id).value;
+      state[f.id] = [...document.querySelectorAll(`input[data-group="${f.id}"]:checked`)].map(x=>x.value);
+    else if (f.type==='radio2'){
+      const c = document.querySelector(`input[name="${f.id}"]:checked`);
+      if (c) state[f.id] = c.value;
+    }
+    else if (f.type==='pairs')
+      state[f.id] = f.options.map((_,i)=>document.querySelector(`input[name="pair-${i}"]:checked`)?.value || '');
+    else {
+      const el = document.getElementById(f.id);
+      if (el) state[f.id] = el.value;
+    }
   });
   save();
 }
 
 function missingRequired(fields){
-  return fields.filter(f=>f.req && !(state[f.id]||'').trim()).map(f=>f.label);
+  return fields.filter(f=>{
+    if (f.sysOnly && !SYS()) return false;
+    const isReq = f.req || (f.reqSys && SYS());
+    if (!isReq) return false;
+    const v = state[f.id];
+    if (f.type==='pairs') return !(v||[]).filter(Boolean).length;
+    if (Array.isArray(v)) return !v.length;
+    return !(v||'').trim();
+  }).map(f=>((!SYS() && f.altLabel) ? f.altLabel : f.label).split(':')[0]);
 }
 
 function render(){
   renderProgress();
   const card = document.getElementById('card');
-  if (step >= STEPS.length) return renderFinish();
+  if (step >= FINISH) return renderFinish();
   const s = STEPS[step];
+  if (s.gate) return renderGate();
+  const why = (!SYS() && s.whyAlt) ? s.whyAlt : s.why;
+  const canSkip = s.phase===2 || (s.phase===3 && !SYS());
   card.innerHTML = `
-    <div class="step-kicker">${s.kicker}</div>
+    <div class="step-kicker">${s.pk} — ${s.n}</div>
     <h2>${s.title}</h2>
-    <p class="why">${s.why}</p>
+    <p class="why">${why}</p>
     ${s.fields.map(fieldHtml).join('')}
     <p class="err" id="err"></p>
     <div class="nav">
       <button class="ghost" id="back" ${step===0?'style="visibility:hidden"':''}>&larr; Back</button>
-      <button class="primary" id="next">${step===STEPS.length-1?'Finish — build my Voice Print':'Next &rarr;'}</button>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        ${canSkip?'<button class="ghost" id="skip">Skip ahead — build my Voice Print</button>':''}
+        <button class="primary" id="next">${step===FINISH-1?'Finish — build my Voice Print':'Next &rarr;'}</button>
+      </div>
     </div>`;
   card.querySelectorAll('input,textarea,select').forEach(el=>
-    el.addEventListener('change',()=>collect(s.fields)));
-  document.getElementById('back').onclick = ()=>{ collect(s.fields); step--; save(); render(); window.scrollTo(0,0); };
+    el.addEventListener('change',(e)=>{
+      // enforce choose-up-to-N
+      if (e.target.type==='checkbox'){
+        const wrap = e.target.closest('.checks');
+        const max = wrap ? parseInt(wrap.dataset.max||'0') : 0;
+        if (max && wrap.querySelectorAll('input:checked').length > max){
+          e.target.checked = false;
+        }
+      }
+      collect(s.fields);
+    }));
+  document.getElementById('back').onclick = ()=>{ collect(s.fields); step--; if (STEPS[step]?.gate) step--; save(); render(); window.scrollTo(0,0); };
   document.getElementById('next').onclick = ()=>{
     collect(s.fields);
     const miss = missingRequired(s.fields);
@@ -263,13 +387,42 @@ function render(){
     }
     step++; save(); render(); window.scrollTo(0,0);
   };
+  const sk = document.getElementById('skip');
+  if (sk) sk.onclick = ()=>{ collect(s.fields); step = FINISH; save(); render(); window.scrollTo(0,0); };
 }
 
-function lines(v){ return (v||'').split('\n').map(x=>x.trim()).filter(Boolean); }
+function renderGate(){
+  const card = document.getElementById('card');
+  card.innerHTML = `
+    <div class="gatechoice">
+      <div class="step-kicker">Phase 1 complete</div>
+      <div class="big">Your core voice is captured.</div>
+      <p>You can build your Voice Print right now — the file, the AI prompt, and your report
+      all work. Or keep going: about five more minutes adds the details that make your voice
+      much harder to copy.</p>
+      <div class="finish-actions" style="justify-content:center">
+        <button class="gold" id="gate-finish">Build my Voice Print now</button>
+        <button class="primary" id="gate-continue">Keep going — make it harder to copy</button>
+      </div>
+    </div>`;
+  document.getElementById('gate-finish').onclick = ()=>{ step = FINISH; save(); render(); window.scrollTo(0,0); };
+  document.getElementById('gate-continue').onclick = ()=>{ step++; save(); render(); window.scrollTo(0,0); };
+}
+
+// ---------- OUTPUT BUILDERS ----------
+
+const g = id => (state[id]||'').trim().replace(/\s*\n+\s*/g,' ');
+const gml = id => (state[id]||'').trim();
+const pairsChosen = () => (state.pairs||[]).filter(Boolean);
+const toneLine = () => {
+  const p = pairsChosen().join(', ');
+  const t = g('tone');
+  return [p, t].filter(Boolean).join('. In their own words: ') || '(see samples)';
+};
 
 function buildKeyterms(){
   const terms = [];
-  const add = t => { t=t.trim(); if (t && !terms.some(x=>x.toLowerCase()===t.toLowerCase())) terms.push(t); };
+  const add = t => { t=(t||'').trim(); if (t && !terms.some(x=>x.toLowerCase()===t.toLowerCase())) terms.push(t); };
   add(state.name); add(state.brand);
   (state.website||'').split(/[,;()]| /).forEach(w=>{ if (w.includes('.')) add(w.replace(/[:\/]+$/,'')); });
   lines(state.products).forEach(p=>add(p.split(/—|--|:|\$/)[0]));
@@ -278,22 +431,18 @@ function buildKeyterms(){
   return terms;
 }
 
-function listBlock(v, indent){
+function listBlock(v){
   const ls = lines(v);
-  if (!ls.length) return indent + '- (none yet)';
-  return ls.map(x=>indent + '- ' + x).join('\n');
+  return ls.length ? ls.map(x=>'  - '+x).join('\n') : '  - (none yet)';
 }
 function numBlock(v){
   const ls = lines(v);
-  if (!ls.length) return '  (none yet)';
-  return ls.map((x,i)=>`  ${i+1}. ${x}`).join('\n');
+  return ls.length ? ls.map((x,i)=>`  ${i+1}. ${x}`).join('\n') : '  (none yet)';
 }
 
 function generate(){
   const d = new Date();
   const date = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-  const g = id => (state[id]||'').trim().replace(/\s*\n+\s*/g,' ');
-  const gml = id => (state[id]||'').trim();
   return `# My Voice Print™
 <!-- Generated by the Voice Print™ app on ${date}.
 Drop this file into your one-for-ten-system folder, replacing the template.
@@ -301,50 +450,62 @@ Update it whenever your offer, links, or positioning change. -->
 
 ## Me
 - Name: ${g('name')}
-- Business/brand: ${g('brand')}
+- Business/brand: ${g('brand') || g('name')}
 - Website: ${g('website') || '(none yet)'}
+- Using this as: ${SYS() ? 'One-for-Ten System™ configuration' : 'standalone voice file for AI writing'}
 
 ## Who I help
-- Who I help: ${g('who')}
-- Why people come to me — and what they leave with: ${g('comeleave') || '(still articulating this)'}
+- Who I help: ${g('audience')}
 - My story — the part only I can tell: ${g('story')}
-- How I describe myself in one line: ${g('oneline')}
+- How I describe myself in one line: ${g('oneline') || '(none yet)'}
 - Who I'm not for: ${g('notfor') || '(none named yet)'}
 
 ## How I sound
-- My tone in three words: ${g('tone')}
-- Signature phrases — USE WORD-FOR-WORD, NEVER REWORD:
-${lines(state.phrases).length ? lines(state.phrases).map(p=>'  - "'+p.replace(/^"|"$/g,'')+'"').join('\n') : '  - (none yet)'}
-- Banned words and phrases — never use:
-${listBlock(state.banned,'  ')}
+- My tone: ${toneLine()}
+- How strongly I state opinions: ${g('certainty') || '(match my samples)'}
+- Who I am to my reader: ${(state.roles||[]).join(' + ') || '(match my samples)'}
+- I write as: ${g('iwe') || '"I" — I speak as myself'}
+- Signature phrases — USE WORD-FOR-WORD, NEVER REWORD, only where they naturally fit (never forced into every piece):
+${lines(state.phrases).length ? lines(state.phrases).map(p=>'  - '+p).join('\n') : '  - (none yet)'}
+- How I start a tough point:
+${listBlock(state.openers)}
+- Banned words, phrases, and styles — never use:
+${listBlock(state.banned)}
 - A written sample that sounds MOST like me:
   ${gml('sample').replace(/\n/g,'\n  ')}
 - A spoken sample (unedited, from a transcript):
   ${gml('sample2').replace(/\n/g,'\n  ') || '(none yet)'}
+- What I NEVER sound like (the "that's not me" test): ${g('antivoice') || '(none given)'}
+- What would make a piece unusable even if technically correct: ${g('unusable') || '(nothing named)'}
 - Humor / stories / off-limits: ${g('humor') || '(no special rules yet)'}
 
 ## What I stand for
-- What most people in my field get wrong: ${g('beliefs')}
-- The one idea I'd defend anywhere: ${g('hill') || '(still naming it)'}
-- I write as: ${g('iwe') || '"I" — I speak as myself'}
-- How my writing behaves: ${(state.stylerules||[]).join('; ') || '(match my samples)'}
+- My core belief (most people say / I think that's wrong / instead): ${g('belief')}
+- How I open an explanation: ${(state.argopen||[]).join(' or ') || '(match my samples)'}
+- My writing habits: ${(state.habits||[]).join('; ') || '(match my samples)'}
+- On screen my writing looks like: ${g('visual') || '(match my samples)'}
+- How I prove a point (reach for first): ${(state.proofstyle||[]).join(', then ') || '(match my samples)'}
+- What readers should feel: ${(state.feel||[]).join(', ') || '(clearer)'}
+- How my voice changes by mode: ${g('modes') || '(consistent across modes)'}
+- Worlds I borrow examples from: ${lines(state.worlds).join(', ') || '(none)'}
 
 ## Where I show up
 - Platforms I'm on: ${(state.platforms||[]).join(', ') || '(none selected)'}
-- My PRIMARY platform (optimize hooks for this one): ${g('primary')}
+- My PRIMARY platform (optimize hooks for this one): ${g('primary') || '(not set)'}
 - Hashtag rule: ${g('hashrule') || 'None — I don\'t use hashtags'}
 - My hashtag sets: ${g('hashsets') || '(none)'}
 
 ## What I sell
-- My three products:
+- My products/offers:
 ${numBlock(state.products)}
-- In addition to my flagship: ${g('flagship') || '(nothing else yet)'}
-- PRIMARY call-to-action — exact invitation + link (default close on every piece): "${g('cta').replace(/^"|"$/g,'')}"
+- In addition to my flagship: ${SYS() ? (g('flagship') || '(nothing else yet)') : '(n/a)'}
+- PRIMARY call-to-action — exact invitation + link (default close, used when the piece has earned it): "${g('cta').replace(/^"|"$/g,'') || '(none — do not add promotion)'}"
 - Secondary CTA + link: ${g('cta2') || '(none yet)'}
 
 ## Why I am qualified
-- My proof: ${g('proof')}
-- The ONE proof point that must never get buried (include in the LinkedIn post and newsletter of every run): ${g('proofpoint')}
+- My proof bank (claim — exact fact — where it belongs):
+${listBlock(state.proofbank)}
+- The ONE proof point that must never get buried (include in the LinkedIn post and newsletter of every run): ${g('proofpoint') || '(none set)'}
 - Testimonials I can quote: ${g('testimonials') || '(collecting — none loaded yet)'}
 
 ## My archive shortlist (best existing pieces — first runs, no recording needed)
@@ -354,9 +515,9 @@ ${numBlock(state.archive)}
 ${numBlock(state.firstfive)}
 
 ## Production preferences
-- Captions on clips: ${g('captions') || 'Yes'}
+- Captions on clips: ${SYS() ? (g('captions') || 'Yes') : '(n/a)'}
 - Brand colors + fonts for quote graphics: ${g('brandkit') || '(none yet — ask me before making quote graphics)'}
-- Anything else the system should know: ${g('anything') || '(nothing extra)'}
+- Anything else the system should know: see "unusable" line under How I sound.
 
 ## Words I Use (brand vocabulary — feeds the transcription keyterms)
 These are passed to the transcription engine so they come back spelled right
@@ -366,87 +527,112 @@ ${buildKeyterms().map(t=>'- '+t).join('\n')}
 }
 
 function buildPrompt(){
-  const g = id => (state[id]||'').trim().replace(/\s*\n+\s*/g,' ');
-  const phr = lines(state.phrases).map(p=>'- "'+p.replace(/^"|"$/g,'')+'"').join('\n') || '- (none)';
-  const ban = lines(state.banned).map(b=>'- '+b).join('\n') || '- (none)';
+  const phr = lines(state.phrases).map(p=>'- '+p).join('\n');
+  const opn = lines(state.openers).map(o=>'- '+o).join('\n');
+  const ban = lines(state.banned).map(b=>'- '+b).join('\n');
   return `WRITE IN MY VOICE — SYSTEM PROMPT
 (Paste this whole thing into a new chat with any AI — ChatGPT, Claude, Gemini —
-then ask for your LinkedIn post, email, or script. It will sound like you.)
+then ask for your post, email, or script. It will sound like you.)
 
 You are my writing partner. Every word you write must sound like me — not like
 an AI, not like a marketer. Here is who I am and how I sound. Treat these as
 hard rules.
 
-WHO I AM: ${g('name')}, ${g('brand')}. ${g('oneline')}
-
+WHO I AM: ${g('name')}${g('brand') && g('brand')!==g('name') ? ', '+g('brand') : ''}. ${g('oneline')}
 MY STORY: ${g('story')}
+WHO I WRITE FOR: ${g('audience')}
 
-WHO I WRITE FOR: ${g('who')}
-
-MY TONE, IN THREE WORDS: ${g('tone')}
-
-SIGNATURE PHRASES — use word-for-word or not at all, never reworded:
-${phr}
-
-BANNED — never use these words or phrases, or anything that sounds like hype:
-${ban}
+MY VOICE, IN CONTRASTS: ${pairsChosen().join('; ') || 'see samples'}.
+HOW STRONGLY I STATE OPINIONS: ${g('certainty') || 'match my samples'}.
+WHO I AM TO MY READER: ${(state.roles||[]).join(' and ') || 'match my samples'}.
+PERSON: write as ${g('iwe') || '"I" — I speak as myself'}.
+READERS SHOULD FEEL: ${(state.feel||[]).join(', ') || 'clearer'}.
 
 WHAT I STAND FOR — my content defends this point of view:
-${g('beliefs')}${g('hill') ? '\nThe one idea I\'d defend anywhere: ' + g('hill') : ''}
+${g('belief')}
 
-PERSON: write as ${g('iwe') || '"I" — I speak as myself'}.
+HOW I BUILD AN ARGUMENT:
+- I usually open with: ${(state.argopen||[]).join(' or ') || 'see samples'}.
+- I prove points with (in this order): ${(state.proofstyle||[]).join(', then ') || 'see samples'}.
+- On screen my writing looks like: ${g('visual') || 'see samples'}.
+- My habits: ${(state.habits||[]).join('; ') || 'see samples'}.
+${lines(state.worlds).length ? '- Worlds I borrow examples from: '+lines(state.worlds).join(', ')+'.' : ''}
 
-HOW MY WRITING BEHAVES: ${(state.stylerules||[]).join('; ') || 'match my samples'}.
-
+${phr ? 'SIGNATURE PHRASES — word-for-word or not at all, only where they naturally fit. NEVER force one into every piece:\n'+phr+'\n' : ''}${opn ? 'HOW I START A TOUGH POINT (use sparingly, like I do):\n'+opn+'\n' : ''}${ban ? 'BANNED — never use these words, phrases, or styles, or anything that sounds like hype:\n'+ban+'\n' : ''}
+${g('antivoice') ? 'WHAT I NEVER SOUND LIKE — this sentence is embarrassingly unlike me; avoid everything about it:\n'+g('antivoice')+'\n' : ''}${g('unusable') ? 'A PIECE IS UNUSABLE IF: '+g('unusable')+'\n' : ''}
 A WRITTEN SAMPLE THAT SOUNDS MOST LIKE ME — match this rhythm and register:
-${(state.sample||'').trim()}
-${(state.sample2||'').trim() ? '\nA SPOKEN SAMPLE — for scripts and anything meant to be read aloud, match this instead:\n' + (state.sample2||'').trim() : ''}
+${gml('sample')}
+${gml('sample2') ? '\nA SPOKEN SAMPLE — for scripts and anything meant to be read aloud, match this instead:\n'+gml('sample2') : ''}
 
-MY PROOF — weave in naturally, never let me sound like I'm bragging:
-${g('proof')}
-
-EVERY PIECE ENDS at a destination I own. Default close: ${g('cta')}
+${lines(state.proofbank).length ? 'MY PROOF BANK — each entry says where it belongs; use accurately and only where it fits:\n'+lines(state.proofbank).map(p=>'- '+p).join('\n')+'\n' : ''}${g('proofpoint') ? 'MY CORE PROOF POINT: '+g('proofpoint')+'\n' : ''}
+${g('cta') ? 'DEFAULT CLOSE — only when the piece has earned an invitation: '+g('cta') : 'PROMOTION: none. Never add a sales pitch or call-to-action.'}
+${g('modes') ? '\nVOICE MODES — how I change by task: '+g('modes') : ''}
 
 RULES:
-1. Never invent facts, numbers, or quotes. If something is missing, ask me.
-2. Short sentences carry emotional weight. Vary the rhythm.
-3. No emoji-heavy copy. No manufactured urgency.
-4. Humor and stories: ${g('humor') || 'use sparingly, never at anyone\'s expense.'}
-5. When in doubt, sound more like my sample and less like a marketer.
+1. My samples are the strongest evidence of my voice. If a stated preference
+   above conflicts with how my samples actually read, follow the samples.
+2. Never invent facts, numbers, stories, credentials, quotes, testimonials,
+   or claims. If something is missing, ask me — or write around it.
+3. Use only the proof, stories, and beliefs that strengthen THIS piece.
+   Never a dedicated "about me" block — weave proof in as casual
+   justification for the point being made.
+4. Match my argument structure — how I open, explain, challenge, and land —
+   not just my vocabulary.
+5. Vary sentence length aggressively. Short, punchy lines next to longer
+   explanatory ones. Sentence fragments and starting with And/But/Because
+   are allowed when my samples do it.
+6. NEVER write a summary conclusion ("In conclusion…", "So remember…",
+   "Ultimately…"). End on a sharp thought, a direct question, or my close.
+7. Avoid generic AI language even when it isn't explicitly banned. If a
+   sentence could belong to any consultant or LinkedIn creator, rewrite it
+   with concrete nouns, real stakes, and my rhythm.
+8. Match the mode: teaching, storytelling, promotional, or opinion — using
+   my voice-mode notes above. Never more hype-driven than I normally am.
+9. Before answering, silently check: Would I plausibly say this out loud?
+   Is there a real point of view? Any banned words or fake enthusiasm?
+   Is the proof accurate and earned? Does the close appear only if earned?
+   Do not explain this check — return only the content.
+10. When torn between the polished sentence and the natural one, choose
+    the natural one — even if it is slightly less "marketing-perfect."
 
 — Built with The Voice Print™ (voiceprint-exitproof.netlify.app), part of the
 Exit-Proof™ framework by Kwame Kuadey.`;
 }
 
 function buildReport(){
-  const g = id => esc((state[id]||'').trim());
-  const phr = lines(state.phrases).map(p=>'<li>"'+esc(p.replace(/^"|"$/g,''))+'"</li>').join('') || '<li>(none yet)</li>';
+  const G = id => esc(g(id));
+  const phr = lines(state.phrases).map(p=>'<li>'+esc(p)+'</li>').join('') || '<li>(none yet)</li>';
   const ban = lines(state.banned).map(b=>'<li>'+esc(b)+'</li>').join('') || '<li>(none yet)</li>';
+  const pf  = lines(state.proofbank).map(p=>'<li>'+esc(p)+'</li>').join('') || (g('proofpoint') ? '<li>'+G('proofpoint')+'</li>' : '<li>(none yet)</li>');
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Voice Print™ Report — ${g('name')}</title>
+<title>Voice Print™ Report — ${G('name')}</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<style>body{font-family:'DM Sans',sans-serif;background:#FAF8F3;color:#0F1117;line-height:1.6;margin:0;padding:40px 20px}
-.page{max-width:680px;margin:0 auto}h1{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,42px);margin:6px 0}
-.kicker{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8f6512;font-weight:700}
-.one{font-family:'Playfair Display',serif;font-style:italic;font-size:20px;margin:10px 0 26px}
-h2{font-family:'Playfair Display',serif;font-size:20px;border-bottom:2px solid #B8841A;padding-bottom:6px;margin:30px 0 10px}
-ul{margin:8px 0;padding-left:22px}blockquote{background:#0F1117;color:#FAF8F3;border-radius:10px;padding:18px 20px;font-family:'Playfair Display',serif;font-style:italic;margin:12px 0}
-.note{font-size:13px;color:#6b6e76}footer{margin-top:40px;border-top:1px solid #e5ddcc;padding-top:14px;font-size:13px;color:#6b6e76}
+<style>body{font-family:'DM Sans',sans-serif;background:#FAF8F3;color:#0F1117;line-height:1.65;margin:0;padding:40px 20px;font-size:16.5px}
+.page{max-width:700px;margin:0 auto}h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,44px);margin:6px 0}
+.kicker{font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:#8f6512;font-weight:700}
+.one{font-family:'Playfair Display',serif;font-style:italic;font-size:21px;margin:10px 0 26px}
+h2{font-family:'Playfair Display',serif;font-size:21px;border-bottom:2px solid #B8841A;padding-bottom:6px;margin:32px 0 10px}
+ul{margin:8px 0;padding-left:24px}li{margin:4px 0}
+blockquote{background:#0F1117;color:#FAF8F3;border-radius:12px;padding:20px 22px;font-family:'Playfair Display',serif;font-style:italic;margin:12px 0;font-size:17px}
+.note{font-size:15px;color:#5c5f66}footer{margin-top:40px;border-top:1px solid #e5ddcc;padding-top:16px;font-size:15px;color:#5c5f66}
 footer a{color:#8f6512;font-weight:700}@media print{body{padding:0}}</style></head><body><div class="page">
 <div class="kicker">Voice Print™ Report</div>
-<h1>${g('name')}</h1>
-<div class="one">${g('oneline')}</div>
-<p class="note">Hand this page to anyone who writes for ${g('name')} — a ghostwriter, a VA, a marketer, or an AI. It is the definition of the voice. Do not improvise around it.</p>
-<h2>Tone</h2><p>${g('tone')}</p>
-<h2>Who this voice speaks to</h2><p>${g('who')}</p>
-<h2>The story behind the voice</h2><p>${g('story')}</p>
-<h2>What this voice stands for</h2><p>${g('beliefs')}${(state.hill||'').trim() ? '<br><b>The one idea defended anywhere:</b> '+g('hill') : ''}</p>
-<h2>How the writing behaves</h2><p>Written as ${g('iwe') || '"I"'}. ${esc((state.stylerules||[]).join(' · '))}</p>
-<h2>Signature phrases — word-for-word or not at all</h2><ul>${phr}</ul>
+<h1>${G('name')}</h1>
+<div class="one">${G('oneline') || G('audience')}</div>
+<p class="note">Hand this page to anyone who writes for ${G('name')} — a ghostwriter, a VA, a marketer, or an AI. It is the definition of the voice. Do not improvise around it.</p>
+<h2>The voice, in contrasts</h2><p>${esc(pairsChosen().join(' · ')) || '(see the sample below)'}${g('tone') ? ' — in their own words: '+G('tone') : ''}</p>
+<h2>Who this voice speaks to</h2><p>${G('audience')}</p>
+<h2>Who ${G('name')} is to the reader</h2><p>${esc((state.roles||[]).join(' and ')) || '(see sample)'} — ${G('certainty') || ''}. Written as ${G('iwe') || '"I"'}.</p>
+<h2>The story behind the voice</h2><p>${G('story')}</p>
+<h2>What this voice stands for</h2><p>${G('belief')}</p>
+<h2>How the writing behaves</h2><p>${esc((state.habits||[]).join(' · ')) || '(match the sample)'}${g('visual') ? ' — On screen: '+G('visual') : ''}${(state.argopen||[]).length ? ' — Opens with: '+esc((state.argopen||[]).join(' or ')) : ''}${(state.proofstyle||[]).length ? ' — Proves points with: '+esc((state.proofstyle||[]).join(', then ')) : ''}</p>
+<h2>Signature phrases — word-for-word or not at all, never forced</h2><ul>${phr}</ul>
 <h2>Banned — never use</h2><ul>${ban}</ul>
-<h2>What it sounds like</h2><blockquote>${g('sample').replace(/\n/g,'<br>')}</blockquote>
-<h2>Proof</h2><p>${g('proof')}</p>
-<h2>Every piece ends here</h2><p>${g('cta')}</p>
+${g('antivoice') ? '<h2>What this voice never sounds like</h2><p>'+G('antivoice')+'</p>' : ''}
+<h2>What it sounds like</h2><blockquote>${G('sample') ? gml('sample').split('\n').map(esc).join('<br>') : ''}</blockquote>
+<h2>Proof this voice may use</h2><ul>${pf}</ul>
+${g('cta') ? '<h2>Where every piece points</h2><p>'+G('cta')+'</p>' : ''}
+${(state.feel||[]).length ? '<h2>Readers should walk away feeling</h2><p>'+esc((state.feel||[]).join(', '))+'</p>' : ''}
 <footer>Built with <a href="https://voiceprint-exitproof.netlify.app">The Voice Print™</a> · part of the <a href="https://exit-proof.com">Exit-Proof™</a> framework by Kwame Kuadey · We should all be known.</footer>
 </div></body></html>`;
 }
@@ -461,7 +647,8 @@ function downloadFile(content, filename, type){
 }
 
 async function submitLead(email){
-  const body = new URLSearchParams({'form-name':'voiceprint-leads', name: state.name||'', email, brand: state.brand||''});
+  const phase = step >= FINISH && (state.cta || state.primary || lines(state.products).length) ? '3' : (lines(state.phrases).length || state.feel?.length ? '2' : '1');
+  const body = new URLSearchParams({'form-name':'voiceprint-leads', name: state.name||'', email, brand: state.brand||'', path: state.path||'', phase});
   try {
     await fetch('/', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body: body.toString()});
   } catch(e) { /* never block the person on a network hiccup */ }
@@ -473,7 +660,7 @@ function bonusHtml(){
       <h3>Two more tools, built from the same answers</h3>
       <p><b>Your AI Voice Prompt</b> — paste it into ChatGPT, Claude, or Gemini and it writes like you, instantly.<br>
       <b>Your Voice Print™ Report</b> — a one-page voice guide to hand to anyone who writes for you.</p>
-      <div class="gate">
+      <div class="gate-form">
         <input type="email" id="lead-email" placeholder="you@yourcompany.com" autocomplete="email">
         <button class="gold" id="unlock">Unlock both — free</button>
       </div>
@@ -522,12 +709,26 @@ function wireBonus(){
 }
 
 function renderFinish(){
+  renderProgress();
   const card = document.getElementById('card');
   const md = generate();
+  const sysSteps = SYS() ? `
+      <ol>
+        <li>Move the downloaded <b>voice-print.md</b> into your <b>one-for-ten-system</b> folder, replacing the one that's there.</li>
+        <li>Drop a video into <b>drop-your-video-here</b>.</li>
+        <li>Open the folder in Claude and type: <b>run my one-for-ten</b>.</li>
+      </ol>` : `
+      <ol>
+        <li>Download your file and keep it — it's yours, and it works in any AI.</li>
+        <li>Unlock your AI Voice Prompt below and paste it into ChatGPT, Claude, or Gemini.</li>
+        <li>Ask for your next post, email, or script — and notice how much less you have to fix.</li>
+      </ol>
+      <b>Ready to turn one video into ten pieces of content?</b> The One-for-Ten System™ runs on
+      the exact file you just built. It's at <a href="https://exit-proof.com"><b>exit-proof.com</b></a>.`;
   card.innerHTML = `
     <div class="step-kicker">Done</div>
     <h2>Your Voice Print™ is ready</h2>
-    <p class="why">Read it once. If a line doesn't sound like you, go back and say it the way you'd actually say it.</p>
+    <p class="why">Read it once. If a line doesn't sound like you, go back and say it the way you'd actually say it. Honest beats polished.</p>
     <pre id="preview">${esc(md)}</pre>
     <div class="finish-actions">
       <button class="gold" id="download">Download voice-print.md</button>
@@ -536,12 +737,7 @@ function renderFinish(){
     </div>
     <div class="nextsteps">
       <strong>What to do with it:</strong>
-      <ol>
-        <li>Move the downloaded <b>voice-print.md</b> into your <b>one-for-ten-system</b> folder, replacing the one that's there.</li>
-        <li>Drop a video into <b>drop-your-video-here</b>.</li>
-        <li>Open the folder in Claude and type: <b>run my one-for-ten</b>.</li>
-      </ol>
-      Don't have the system yet? It's at <a href="https://exit-proof.com"><b>exit-proof.com</b></a>.
+      ${sysSteps}
     </div>
     ${bonusHtml()}`;
   document.getElementById('download').onclick = ()=>downloadFile(generate(), 'voice-print.md', 'text/markdown');
