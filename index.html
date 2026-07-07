@@ -695,7 +695,7 @@ async function submitLead(email){
 function bonusHtml(){
   if (!state.__unlocked) return `
     <div class="bonus" id="gate">
-      <div class="bonus-title">Make Any AI Write Like You</div>
+      <div class="bonus-title">Get More: Elevate Your Content with AI</div>
       <div class="bonus-sub">Two more tools, built from the same answers — free.</div>
       <p><b>Your AI Voice Prompt</b> — paste it into ChatGPT, Claude, or Gemini and it writes like you, instantly.<br>
       <b>Your Voice Print™ Report</b> — a one-page voice guide to hand to anyone who writes for you.</p>
@@ -751,17 +751,21 @@ function renderFinish(){
   renderProgress();
   const card = document.getElementById('card');
   const md = generate();
-  const sysSteps = SYS() ? `
+  const aiSection = `
+      <p style="margin-top:14px"><b>If you want AI to sound like you:</b></p>
+      <ol>
+        <li>Download your <b>voice-print.md</b> file — it's yours, and it works with any AI.</li>
+        <li>Add it to your favorite AI's memory or instructions — a ChatGPT project or its custom instructions, a Claude project's knowledge, or a Gemini Gem — so it understands who you are before you ever type a prompt.</li>
+        <li>Then unlock your AI Voice Prompt below for an even stronger version, and ask for your next post, email, or script.</li>
+      </ol>`;
+  const systemSection = `
+      <p style="margin-top:14px"><b>If you're running The One-for-Ten System™:</b></p>
       <ol>
         <li>Move the downloaded <b>voice-print.md</b> into your <b>one-for-ten-system</b> folder, replacing the one that's there.</li>
         <li>Drop a video into <b>drop-your-video-here</b>.</li>
         <li>Open the folder in Claude Code and type: <b>run my one-for-ten</b>.</li>
-      </ol>` : `
-      <ol>
-        <li>Download your file and keep it — it's yours, and it works in any AI.</li>
-        <li>Unlock your AI Voice Prompt below and paste it into ChatGPT, Claude, or Gemini.</li>
-        <li>Ask for your next post, email, or script — and notice how much less you have to fix.</li>
       </ol>`;
+  const sysSteps = SYS() ? (systemSection + aiSection) : (aiSection + systemSection);
   card.innerHTML = `
     <div class="step-kicker">Done</div>
     <h2>Your Voice Print™ is ready</h2>
@@ -777,15 +781,17 @@ function renderFinish(){
       ${sysSteps}
     </div>
     ${bonusHtml()}
-    ${SYS() ? '' : `
     <div class="nextstep">
-      <h3>Next step — what do I do with this voice?</h3>
-      <p>You just built the setup file for <b>The One-for-Ten System™</b> — the engine that
-      turns ONE video into TEN pieces of content, written in your voice, on your own computer:
-      clips, a LinkedIn post, a newsletter, a thread, and more. Your Voice Print drops straight
-      in; the hard part is already done.</p>
-      <p style="margin-top:10px"><a href="https://exit-proof.com">See how it works at exit-proof.com &rarr;</a></p>
-    </div>`}`;
+      <h3>One video in. Ten pieces out — in your voice.</h3>
+      <p><b>The One-for-Ten System™</b> is your own full-stack marketing team: an AI content
+      engine that runs on your own computer. Drop in one video, and it writes ten platform-ready
+      pieces — clips with captions, a LinkedIn post, a newsletter, a thread, quote graphics, and
+      a 90-day publishing plan — every one of them powered by the Voice Print you just built.
+      Authentic, specific, in your voice. Not generic AI slop.</p>
+      <p style="margin-top:10px">No more content block. No more inconsistency. Just the
+      visibility you need to be known — and the setup file is already done: you just made it.</p>
+      <p style="margin-top:10px"><a href="https://exit-proof.com">See how The One-for-Ten System™ works at exit-proof.com &rarr;</a></p>
+    </div>`;
   document.getElementById('download').onclick = ()=>downloadFile(generate(), 'voice-print.md', 'text/markdown');
   document.getElementById('copy').onclick = async (e)=>{
     await navigator.clipboard.writeText(generate());
