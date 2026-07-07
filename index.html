@@ -99,7 +99,7 @@ const STORE_KEY = 'voiceprint-v1';
 // type: text | textarea | lines (one-per-line textarea) | checks | select
 const STEPS = [
   {
-    kicker:'Step 1 of 10', title:'You', why:'The basics that sign every piece.',
+    kicker:'Step 1 of 11', title:'You', why:'The basics that sign every piece.',
     fields:[
       {id:'name', label:'Your name', req:true, type:'text', ph:'e.g., Kwame Kuadey'},
       {id:'brand', label:'Your business or brand', req:true, type:'text', ph:'e.g., Exit-Proof™'},
@@ -107,7 +107,7 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 2 of 10', title:'Who you help', why:'The system points every piece at these people. Be specific — "everyone" produces content for no one.',
+    kicker:'Step 2 of 11', title:'Who you help', why:'The system points every piece at these people. Be specific — "everyone" produces content for no one.',
     fields:[
       {id:'who', label:'Who do you help?', req:true, type:'textarea', ph:'The specific person, at the specific moment they need you.'},
       {id:'comeleave', label:'Why do people come to you — and what do they leave with?', type:'textarea', hint:'The problem that brings them in the door, and the change they walk out with.'},
@@ -117,17 +117,27 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 3 of 10', title:'How you sound', why:'This is the heart of the Voice Print. The system treats these as law.',
+    kicker:'Step 3 of 11', title:'How you sound', why:'This is the heart of the Voice Print. The system treats these as law.',
     fields:[
       {id:'tone', label:'Your tone in three words', req:true, type:'text', ph:'e.g., Honest, direct, generous'},
       {id:'phrases', label:'Signature phrases — things you actually say', type:'lines', hint:'One per line. The system will use these word-for-word or not at all — never reworded.'},
       {id:'banned', label:'Banned words and phrases', type:'lines', hint:'One per line. Words that make you cringe when marketers use them. The system will never use these.'},
-      {id:'sample', label:'A short sample that sounds MOST like you', req:true, type:'textarea', cls:'tall', hint:'A paragraph you wrote (or said) that you\'d be proud to have quoted back. This calibrates everything.'},
+      {id:'sample', label:'A short WRITTEN sample that sounds MOST like you', req:true, type:'textarea', cls:'tall', hint:'A paragraph you wrote that you\'d be proud to have quoted back. This calibrates everything.'},
+      {id:'sample2', label:'A SPOKEN sample (strongly recommended)', type:'textarea', cls:'tall', hint:'Paste ~60 seconds of you talking — from any voice memo or video transcript, unedited. You sound different out loud than on the page; this captures the difference.'},
       {id:'humor', label:'Humor, stories, and off-limits topics', type:'textarea', hint:'How you use stories and humor — and anything the system must never bring up.'},
     ]
   },
   {
-    kicker:'Step 4 of 10', title:'Where you show up', why:'So hooks are written for the platform your people actually see.',
+    kicker:'Step 4 of 11', title:'What you stand for', why:'Voice isn\'t just rhythm — it\'s a point of view. This is what makes your content impossible to confuse with a competitor\'s.',
+    fields:[
+      {id:'beliefs', label:'What do you believe that most people in your field get wrong?', req:true, type:'textarea', cls:'tall', hint:'The thing you find yourself arguing. One to three plain sentences.'},
+      {id:'hill', label:'The one idea you\'d defend anywhere', type:'text', ph:'The hill you\'ll die on, in one line.'},
+      {id:'iwe', label:'When you write, you are…', type:'select', options:['"I" — I speak as myself (recommended for a personal brand)','"We" — I speak for my company','Mixed — "I" for stories, "we" for the business']},
+      {id:'stylerules', label:'How your writing behaves', type:'checks', options:['Short, punchy sentences','Longer, flowing paragraphs','Contractions (I\'m, don\'t, can\'t)','Questions straight to the reader','Plain words over industry vocabulary','Numbers and specifics over adjectives']},
+    ]
+  },
+  {
+    kicker:'Step 5 of 11', title:'Where you show up', why:'So hooks are written for the platform your people actually see.',
     fields:[
       {id:'platforms', label:'Platforms you publish on', type:'checks',
         options:['LinkedIn','YouTube','Instagram','TikTok','X / Threads','Facebook','Substack','Email newsletter','Podcast']},
@@ -137,7 +147,7 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 5 of 10', title:'What you sell', why:'Hard rule of the system: every piece ends at a destination you own. These are the destinations.',
+    kicker:'Step 6 of 11', title:'What you sell', why:'Hard rule of the system: every piece ends at a destination you own. These are the destinations.',
     fields:[
       {id:'products', label:'Your products or offers (up to three)', type:'lines', hint:'One per line, with price if you name it publicly. e.g., "The One-for-Ten System™ — turn one video into ten pieces. $297."'},
       {id:'flagship', label:'Anything beyond the flagship?', type:'text', hint:'A premium program, retainer, or 1:1 offer.'},
@@ -146,7 +156,7 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 6 of 10', title:'Why you\'re qualified', why:'Proof beats promises. The system weaves this in so you never have to brag mid-post.',
+    kicker:'Step 7 of 11', title:'Why you\'re qualified', why:'Proof beats promises. The system weaves this in so you never have to brag mid-post.',
     fields:[
       {id:'proof', label:'Your proof', req:true, type:'textarea', cls:'tall', hint:'Numbers, names, credentials, outcomes. Only what\'s true and verifiable — accuracy is the brand.'},
       {id:'proofpoint', label:'The ONE proof point that must never get buried', req:true, type:'textarea', hint:'The single line that makes a stranger take you seriously. It appears in the LinkedIn post and newsletter of every run.'},
@@ -154,19 +164,19 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 7 of 10', title:'Your archive', why:'Your best existing content can be your first runs — no new recording needed.',
+    kicker:'Step 8 of 11', title:'Your archive', why:'Your best existing content can be your first runs — no new recording needed.',
     fields:[
       {id:'archive', label:'Up to five existing pieces worth repurposing', type:'lines', hint:'One per line: a YouTube link, a workshop recording, your best blog post, a podcast episode.'},
     ]
   },
   {
-    kicker:'Step 8 of 10', title:'Your first five videos', why:'The questions prospects always ask you ARE your content calendar.',
+    kicker:'Step 9 of 11', title:'Your first five videos', why:'The questions prospects always ask you ARE your content calendar.',
     fields:[
       {id:'firstfive', label:'Five questions people always ask you', type:'lines', hint:'One per line, in their words. Each becomes a 10–25 minute video, which becomes ten pieces.'},
     ]
   },
   {
-    kicker:'Step 9 of 10', title:'Production preferences', why:'How your clips and quote graphics should come out.',
+    kicker:'Step 10 of 11', title:'Production preferences', why:'How your clips and quote graphics should come out.',
     fields:[
       {id:'captions', label:'Captions burned into your clips?', type:'select', options:['Yes','No','I add my own in my editor']},
       {id:'brandkit', label:'Brand colors + fonts for quote graphics', type:'textarea', hint:'Hex codes and font names if you have them. e.g., "Gold #B8841A, ink #0F1117, cream #FAF8F3. Playfair Display (headlines), DM Sans (body)." Leave blank and the system will ask.'},
@@ -174,7 +184,7 @@ const STEPS = [
     ]
   },
   {
-    kicker:'Step 10 of 10', title:'Words you use', why:'Auto-transcription mangles names and brand terms. Words on this list come back spelled right. Your name, brand, products, and links are added automatically from your earlier answers.',
+    kicker:'Step 11 of 11', title:'Words you use', why:'Auto-transcription mangles names and brand terms. Words on this list come back spelled right. Your name, brand, products, and links are added automatically from your earlier answers.',
     fields:[
       {id:'keyterms', label:'Extra brand vocabulary', type:'lines', hint:'One per line: people\'s names, company names, acronyms, product names, anything transcription keeps getting wrong.'},
     ]
@@ -307,9 +317,17 @@ Update it whenever your offer, links, or positioning change. -->
 ${lines(state.phrases).length ? lines(state.phrases).map(p=>'  - "'+p.replace(/^"|"$/g,'')+'"').join('\n') : '  - (none yet)'}
 - Banned words and phrases — never use:
 ${listBlock(state.banned,'  ')}
-- A sample that sounds MOST like me:
+- A written sample that sounds MOST like me:
   ${gml('sample').replace(/\n/g,'\n  ')}
+- A spoken sample (unedited, from a transcript):
+  ${gml('sample2').replace(/\n/g,'\n  ') || '(none yet)'}
 - Humor / stories / off-limits: ${g('humor') || '(no special rules yet)'}
+
+## What I stand for
+- What most people in my field get wrong: ${g('beliefs')}
+- The one idea I'd defend anywhere: ${g('hill') || '(still naming it)'}
+- I write as: ${g('iwe') || '"I" — I speak as myself'}
+- How my writing behaves: ${(state.stylerules||[]).join('; ') || '(match my samples)'}
 
 ## Where I show up
 - Platforms I'm on: ${(state.platforms||[]).join(', ') || '(none selected)'}
@@ -373,8 +391,16 @@ ${phr}
 BANNED — never use these words or phrases, or anything that sounds like hype:
 ${ban}
 
-A SAMPLE THAT SOUNDS MOST LIKE ME — match this rhythm and register:
+WHAT I STAND FOR — my content defends this point of view:
+${g('beliefs')}${g('hill') ? '\nThe one idea I\'d defend anywhere: ' + g('hill') : ''}
+
+PERSON: write as ${g('iwe') || '"I" — I speak as myself'}.
+
+HOW MY WRITING BEHAVES: ${(state.stylerules||[]).join('; ') || 'match my samples'}.
+
+A WRITTEN SAMPLE THAT SOUNDS MOST LIKE ME — match this rhythm and register:
 ${(state.sample||'').trim()}
+${(state.sample2||'').trim() ? '\nA SPOKEN SAMPLE — for scripts and anything meant to be read aloud, match this instead:\n' + (state.sample2||'').trim() : ''}
 
 MY PROOF — weave in naturally, never let me sound like I'm bragging:
 ${g('proof')}
@@ -414,6 +440,8 @@ footer a{color:#8f6512;font-weight:700}@media print{body{padding:0}}</style></he
 <h2>Tone</h2><p>${g('tone')}</p>
 <h2>Who this voice speaks to</h2><p>${g('who')}</p>
 <h2>The story behind the voice</h2><p>${g('story')}</p>
+<h2>What this voice stands for</h2><p>${g('beliefs')}${(state.hill||'').trim() ? '<br><b>The one idea defended anywhere:</b> '+g('hill') : ''}</p>
+<h2>How the writing behaves</h2><p>Written as ${g('iwe') || '"I"'}. ${esc((state.stylerules||[]).join(' · '))}</p>
 <h2>Signature phrases — word-for-word or not at all</h2><ul>${phr}</ul>
 <h2>Banned — never use</h2><ul>${ban}</ul>
 <h2>What it sounds like</h2><blockquote>${g('sample').replace(/\n/g,'<br>')}</blockquote>
