@@ -22,9 +22,11 @@
   .sub{color:var(--ink);max-width:600px;margin:0 auto;font-size:18px}
   .sub b{color:var(--gold-deep)}
   .privacy{display:inline-block;margin-top:16px;font-size:15px;color:var(--gold-deep);background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:8px 16px;max-width:560px}
-  .progress{display:flex;gap:5px;margin:30px 0 22px}
-  .progress span{flex:1;height:5px;border-radius:3px;background:var(--line);transition:background .3s}
-  .progress span.done{background:var(--gold)}
+  .progress{margin:30px 0 22px}
+  .plabel{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:8px;text-align:center}
+  .pbar{display:flex;gap:6px}
+  .pbar span{flex:1;height:6px;border-radius:3px;background:var(--line);transition:background .3s}
+  .pbar span.done{background:var(--gold)}
   .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:34px 32px;box-shadow:0 2px 16px rgba(15,17,23,.06)}
   .step-kicker{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:700;margin-bottom:8px}
   h2{font-family:'Playfair Display',serif;font-size:29px;font-weight:700;margin-bottom:6px}
@@ -72,6 +74,12 @@
   .nextsteps li{margin:7px 0}
   .bonus{border:1.5px solid var(--line);border-radius:14px;padding:24px;margin-top:18px;background:var(--cream)}
   .bonus h3{font-family:'Playfair Display',serif;font-size:21px;margin-bottom:6px}
+  .bonus-title{font-family:'Playfair Display',serif;font-size:clamp(24px,4vw,32px);font-weight:700;margin-bottom:4px}
+  .bonus-sub{font-size:16px;color:var(--mut);margin-bottom:14px}
+  .nextstep{border:1.5px solid var(--gold);border-radius:14px;padding:24px;margin-top:18px;background:var(--soft)}
+  .nextstep h3{font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px}
+  .nextstep p{font-size:16.5px}
+  .nextstep a{color:var(--gold-deep);font-weight:700}
   .bonus p{font-size:16px;color:var(--ink)}
   .gate-form{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
   .gate-form input{flex:1;min-width:230px;border:1.5px solid var(--line);border-radius:10px;background:#fff;padding:13px 15px;font:inherit;font-size:16.5px}
@@ -96,8 +104,8 @@
     <h1>The Voice Print™</h1>
     <p class="sub">AI can write fast. It just can't sound like <b>you</b> — until you teach it.
     Fifteen minutes of honest answers builds your voice file: paste it into ChatGPT, Claude,
-    or Gemini and stop rewriting robot drafts — or drop it into The One-for-Ten System™ and
-    power every piece it creates.</p>
+    or Gemini and watch your content stand out from the competition — or drop it into The
+    One-for-Ten System™ and power every piece it creates.</p>
     <span class="privacy">Your answers never leave this browser — they're stored only on your own
     computer.</span>
   </header>
@@ -122,8 +130,8 @@ const STEPS = [
     why:'The basics that sign every piece you publish.',
     fields:[
       {id:'path', label:'What brings you here?', type:'radio2', options:[
-        {v:'standalone', t:'I want AI content that sounds like me', d:'Not like AI. I\'ll use the voice file with ChatGPT, Claude, or Gemini.'},
-        {v:'system', t:'I\'m setting up The One-for-Ten System™', d:'I own the system (or I\'m about to) and this file powers it.'}]},
+        {v:'standalone', t:'I want AI content that sounds like me', d:'I\'ll use my Voice Print with ChatGPT, Claude, or Gemini — so my posts, emails, and scripts come out in my voice.'},
+        {v:'system', t:'I\'m setting up The One-for-Ten System™', d:'I own the system (or I\'m about to). My Voice Print is the setup file that teaches it my voice.'}]},
       {id:'name', label:'Your name', req:true, type:'text', ph:'As it should appear on your content'},
       {id:'intent', label:'What is this personal brand for?', req:true, type:'radio2', options:[
         {v:'business', t:'Growing my current business', d:'I want to be the recognized expert in my industry. My content builds the company I run today.'},
@@ -291,8 +299,13 @@ function lines(v){ return (v||'').split('\n').map(x=>x.trim()).filter(Boolean); 
 
 function renderProgress(){
   const p = document.getElementById('progress');
-  p.innerHTML = STEPS.map((_,i)=>`<span class="${i<step?'done':''}"></span>`).join('') +
-    `<span class="${step>=FINISH?'done':''}"></span>`;
+  if (step >= FINISH){ p.innerHTML = ''; return; }
+  const s = STEPS[step];
+  const ph = s.gate ? 1 : s.phase;
+  const phaseSteps = STEPS.map((st,i)=>({st,i})).filter(x=>x.st.phase===ph);
+  const labels = {1:'Phase 1 · Your Core Voice', 2:'Phase 2 · Make It Harder to Copy', 3:'Phase 3 · Hook It to Your Business'};
+  p.innerHTML = `<div class="plabel">${labels[ph]}</div><div class="pbar">` +
+    phaseSteps.map(x=>`<span class="${x.i<=step?'done':''}"></span>`).join('') + `</div>`;
 }
 
 const NL = () => state.intent === 'newlane';
@@ -682,7 +695,8 @@ async function submitLead(email){
 function bonusHtml(){
   if (!state.__unlocked) return `
     <div class="bonus" id="gate">
-      <h3>Two more tools, built from the same answers</h3>
+      <div class="bonus-title">Make Any AI Write Like You</div>
+      <div class="bonus-sub">Two more tools, built from the same answers — free.</div>
       <p><b>Your AI Voice Prompt</b> — paste it into ChatGPT, Claude, or Gemini and it writes like you, instantly.<br>
       <b>Your Voice Print™ Report</b> — a one-page voice guide to hand to anyone who writes for you.</p>
       <div class="gate-form">
@@ -741,15 +755,13 @@ function renderFinish(){
       <ol>
         <li>Move the downloaded <b>voice-print.md</b> into your <b>one-for-ten-system</b> folder, replacing the one that's there.</li>
         <li>Drop a video into <b>drop-your-video-here</b>.</li>
-        <li>Open the folder in Claude and type: <b>run my one-for-ten</b>.</li>
+        <li>Open the folder in Claude Code and type: <b>run my one-for-ten</b>.</li>
       </ol>` : `
       <ol>
         <li>Download your file and keep it — it's yours, and it works in any AI.</li>
         <li>Unlock your AI Voice Prompt below and paste it into ChatGPT, Claude, or Gemini.</li>
         <li>Ask for your next post, email, or script — and notice how much less you have to fix.</li>
-      </ol>
-      <b>Ready to turn one video into ten pieces of content?</b> The One-for-Ten System™ runs on
-      the exact file you just built. It's at <a href="https://exit-proof.com"><b>exit-proof.com</b></a>.`;
+      </ol>`;
   card.innerHTML = `
     <div class="step-kicker">Done</div>
     <h2>Your Voice Print™ is ready</h2>
@@ -764,7 +776,16 @@ function renderFinish(){
       <strong>What to do with it:</strong>
       ${sysSteps}
     </div>
-    ${bonusHtml()}`;
+    ${bonusHtml()}
+    ${SYS() ? '' : `
+    <div class="nextstep">
+      <h3>Next step — what do I do with this voice?</h3>
+      <p>You just built the setup file for <b>The One-for-Ten System™</b> — the engine that
+      turns ONE video into TEN pieces of content, written in your voice, on your own computer:
+      clips, a LinkedIn post, a newsletter, a thread, and more. Your Voice Print drops straight
+      in; the hard part is already done.</p>
+      <p style="margin-top:10px"><a href="https://exit-proof.com">See how it works at exit-proof.com &rarr;</a></p>
+    </div>`}`;
   document.getElementById('download').onclick = ()=>downloadFile(generate(), 'voice-print.md', 'text/markdown');
   document.getElementById('copy').onclick = async (e)=>{
     await navigator.clipboard.writeText(generate());
